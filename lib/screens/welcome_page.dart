@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:greenbook/screens/login_page.dart';
+import 'package:greenbook/screens/register_page.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({super.key});
@@ -33,7 +35,7 @@ class _WelcomePageState extends State<WelcomePage> {
             height: 306,
             fit: BoxFit.cover,
           ),
-          SizedBox(
+          const SizedBox(
             height: 40,
           ),
           Padding(
@@ -84,7 +86,9 @@ class _WelcomePageState extends State<WelcomePage> {
             width: 300,
             height: 60,
             child: ElevatedButton(
-              onPressed: null,
+              onPressed: (){
+                Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=> const RegisterPage(),),);
+              },
               style: ButtonStyle(
                 backgroundColor:
                     MaterialStateProperty.all<Color>(const Color(0xFF000066)),
@@ -97,7 +101,7 @@ class _WelcomePageState extends State<WelcomePage> {
               child: Text(
                 'Create Account',
                 style: GoogleFonts.manrope(
-                  color: Color(0xFFF3F3F3),
+                  color: const Color(0xFFF3F3F3),
                   fontSize: 18,
                   fontWeight: FontWeight.w700,
                   height: 0,
@@ -112,20 +116,18 @@ class _WelcomePageState extends State<WelcomePage> {
           SizedBox(
             width: 300,
             height: 60,
-            child: ElevatedButton(
-              onPressed: null,
-              style: ButtonStyle(
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50),
-                    side: const BorderSide(width: 1, color: Color(0xFF000066)),
-                  ),
-                ),
+            child: OutlinedButton(
+              onPressed: (){
+                Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=> const LoginPage(),),);
+              },
+              style: OutlinedButton.styleFrom(
+                shape: const StadiumBorder(),
+                side: const BorderSide(width: 1, color: Color(0xFF000066))
               ),
               child: Text(
                 'Login',
                 style: GoogleFonts.manrope(
-                  color: Color(0xFF000066),
+                  color: const Color(0xFF000066),
                   fontSize: 18,
                   fontWeight: FontWeight.w700,
                   height: 0,
