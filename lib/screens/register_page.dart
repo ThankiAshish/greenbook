@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:greenbook/screens/login_page.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -243,16 +244,18 @@ class _RegisterPageState extends State<RegisterPage> {
                 )
               ),
               GestureDetector(
-                onTap: null,
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=> const LoginPage(),),);
+                },
                 child: const Text(
                   'Login', 
                   style: TextStyle(
-                        color: Color(0xFF000066),
-                        fontSize: 14,
-                        fontFamily: 'Manrope',
-                        fontWeight: FontWeight.w700,
-                        height: 0,
-                        letterSpacing: 1.40,
+                    color: Color(0xFF000066),
+                    fontSize: 14,
+                    fontFamily: 'Manrope',
+                    fontWeight: FontWeight.w700,
+                    height: 0,
+                    letterSpacing: 1.40,
                   )
                 ),
               ),

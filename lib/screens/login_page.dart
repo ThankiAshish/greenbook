@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:greenbook/screens/home_page.dart';
+import 'package:greenbook/screens/register_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -28,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
           backgroundColor: Colors.transparent,
           shadowColor: Colors.transparent,
           title: Text(
-            'Register',
+            'Login',
             style: GoogleFonts.manrope(
               color: const Color(0xFF000066),
               fontSize: 20,
@@ -44,53 +46,17 @@ class _LoginPageState extends State<LoginPage> {
             const SizedBox(
               height: 10,
             ),
-            Stack(
-              alignment: Alignment.bottomRight,
-              children: [
-                Container(
-                  width: 130,
-                  height: 130,
-                  decoration: BoxDecoration(
-                      border: Border.all(width: 4, color: Colors.white),
-                      boxShadow: [
-                        BoxShadow(
-                            spreadRadius: 2,
-                            blurRadius: 10,
-                            color: Colors.black.withOpacity(0.1))
-                      ],
-                      shape: BoxShape.circle,
-                      image: const DecorationImage(
-                          fit: BoxFit.cover,
-                          image: NetworkImage(
-                              'https://cdn.pixabay.com/photo/2018/11/13/21/43/avatar-3814049_640.png'
-                          )
-                      )
-                  ),
-                ),
-                Positioned(
-                  right: 0,
-                  bottom: 0,
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      shape: BoxShape.circle,
-                    ),
-                    child: const IconButton(
-                      icon: Icon(
-                        Icons.add,
-                        color: Colors.black,
-                      ),
-                      onPressed: null,
-                    ),
-                  ),
-                )
-              ],
+            Image.asset(
+              "assets/images/login.png",
+              width: 220,
+              height: 220,
+              fit: BoxFit.cover,
             ),
             const SizedBox(
-              height: 40,
+              height: 80,
             ),
             Text(
-              'Please Enter Your Details',
+              "Please Verify it's You",
               style: GoogleFonts.manrope(
                 color: Colors.black,
                 fontSize: 16,
@@ -127,44 +93,6 @@ class _LoginPageState extends State<LoginPage> {
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: Colors.white.withOpacity(0.8),
-                  hintText: 'Name',
-                  hintStyle: const TextStyle(color: Colors.grey),
-                  contentPadding: const EdgeInsets.all(20),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide.none,
-                  ),
-                ),         
-              ),
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: TextField(
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white.withOpacity(0.8),
-                  hintText: 'Email',
-                  hintStyle: const TextStyle(color: Colors.grey),
-                  contentPadding: const EdgeInsets.all(20),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide.none,
-                  ),
-                ),         
-              ),
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: TextField(
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white.withOpacity(0.8),
                   hintText: 'Password',
                   hintStyle: const TextStyle(color: Colors.grey),
                   contentPadding: const EdgeInsets.all(20),
@@ -176,89 +104,65 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             const SizedBox(
-              height: 15,
+              height: 120,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: TextField(
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white.withOpacity(0.8),
-                  hintText: 'Confirm Password',
-                  hintStyle: const TextStyle(color: Colors.grey),
-                  contentPadding: const EdgeInsets.all(20),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide.none,
-                  ),
-                ),         
-              ),
-            ),
-          const SizedBox(
-            height: 40,
-          ),
-          SizedBox(
-            width: 300,
-            height: 60,
-            child: OutlinedButton(
-              onPressed: (){
-                Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=> const LoginPage(),),);
-              },
-              style: ButtonStyle(
-                backgroundColor:
-                    MaterialStateProperty.all<Color>(const Color(0xFF000066)),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50),
+            SizedBox(
+              width: 300,
+              height: 60,
+              child: OutlinedButton(
+                onPressed: (){
+                  Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=> const HomePage(),),);
+                },
+                style: OutlinedButton.styleFrom(
+                  shape: const StadiumBorder(),
+                  side: const BorderSide(width: 1, color: Color(0xFF000066))
+                ),
+                child: Text(
+                  'Login',
+                  style: GoogleFonts.manrope(
+                    color: const Color(0xFF000066),
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700,
+                    height: 0,
+                    letterSpacing: 1.80,
                   ),
                 ),
               ),
-              child: Text(
-                'Create Account',
-                style: GoogleFonts.manrope(
-                  color: const Color(0xFFF3F3F3),
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
-                  height: 0,
-                  letterSpacing: 1.80,
-                ),
-              ),
             ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(
-                'Already Have an Account? ', 
-                style: TextStyle(
-                      color: Colors.black,
+            const SizedBox(
+              height: 20,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Don't Have an Account ? ", 
+                  style: GoogleFonts.manrope(
+                    color: Colors.black,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    height: 0,
+                    letterSpacing: 1.40,
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => const RegisterPage(),),);
+                  },
+                  child: Text(
+                    'Register', 
+                    style: GoogleFonts.manrope(
+                      color: const Color(0xFF000066),
                       fontSize: 14,
-                      fontFamily: 'Manrope',
-                      fontWeight: FontWeight.w400,
+                      fontWeight: FontWeight.w700,
                       height: 0,
                       letterSpacing: 1.40,
-                )
-              ),
-              GestureDetector(
-                onTap: null,
-                child: const Text(
-                  'Login', 
-                  style: TextStyle(
-                        color: Color(0xFF000066),
-                        fontSize: 14,
-                        fontFamily: 'Manrope',
-                        fontWeight: FontWeight.w700,
-                        height: 0,
-                        letterSpacing: 1.40,
-                  )
+                    ),
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
         ),
       ),
     );

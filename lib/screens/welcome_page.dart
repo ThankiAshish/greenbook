@@ -25,118 +25,120 @@ class _WelcomePageState extends State<WelcomePage> {
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        body: Column(children: [
-          const SizedBox(
-            height: 100,
-          ),
-          Image.asset(
-            "assets/images/environment.png",
-            width: 408,
-            height: 306,
-            fit: BoxFit.cover,
-          ),
-          const SizedBox(
-            height: 40,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 28.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Welcome to',
+        body: Column(
+          children: [
+            const SizedBox(
+              height: 100,
+            ),
+            Image.asset(
+              "assets/images/environment.png",
+              width: 408,
+              height: 306,
+              fit: BoxFit.cover,
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 28.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Welcome to',
+                    style: GoogleFonts.manrope(
+                      color: const Color(0xFF000066),
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      height: 0,
+                      letterSpacing: 1.60,
+                    ),
+                  ),
+                  Text(
+                    'Greenbook',
+                    style: GoogleFonts.manrope(
+                      color: const Color(0xFF306028),
+                      fontSize: 32,
+                      fontWeight: FontWeight.w600,
+                      height: 0,
+                      letterSpacing: 3.20,
+                    ),
+                  ),
+                  const SizedBox(
+              height: 10,
+            ),
+                  Text(
+                    'We provide the gardeners and you this \nplatform to fuel your passion of \nplantation using the donations.',
+                    style: GoogleFonts.manrope(
+                      color: Colors.black,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      height: 0,
+                      letterSpacing: 1.40,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 90,
+            ),
+            SizedBox(
+              width: 300,
+              height: 60,
+              child: ElevatedButton(
+                onPressed: (){
+                  Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=> const RegisterPage(),),);
+                },
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(const Color(0xFF000066)),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                  ),
+                ),
+                child: Text(
+                  'Create Account',
+                  style: GoogleFonts.manrope(
+                    color: const Color(0xFFF3F3F3),
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700,
+                    height: 0,
+                    letterSpacing: 1.80,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            SizedBox(
+              width: 300,
+              height: 60,
+              child: OutlinedButton(
+                onPressed: (){
+                  Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=> const LoginPage(),),);
+                },
+                style: OutlinedButton.styleFrom(
+                  shape: const StadiumBorder(),
+                  side: const BorderSide(width: 1, color: Color(0xFF000066))
+                ),
+                child: Text(
+                  'Login',
                   style: GoogleFonts.manrope(
                     color: const Color(0xFF000066),
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700,
                     height: 0,
-                    letterSpacing: 1.60,
+                    letterSpacing: 1.80,
                   ),
-                ),
-                Text(
-                  'Greenbook',
-                  style: GoogleFonts.manrope(
-                    color: const Color(0xFF306028),
-                    fontSize: 32,
-                    fontWeight: FontWeight.w600,
-                    height: 0,
-                    letterSpacing: 3.20,
-                  ),
-                ),
-                const SizedBox(
-            height: 10,
-          ),
-                Text(
-                  'We provide the gardeners and you this \nplatform to fuel your passion of \nplantation using the donations.',
-                  style: GoogleFonts.manrope(
-                    color: Colors.black,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                    height: 0,
-                    letterSpacing: 1.40,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 90,
-          ),
-          SizedBox(
-            width: 300,
-            height: 60,
-            child: ElevatedButton(
-              onPressed: (){
-                Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=> const RegisterPage(),),);
-              },
-              style: ButtonStyle(
-                backgroundColor:
-                    MaterialStateProperty.all<Color>(const Color(0xFF000066)),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                ),
-              ),
-              child: Text(
-                'Create Account',
-                style: GoogleFonts.manrope(
-                  color: const Color(0xFFF3F3F3),
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
-                  height: 0,
-                  letterSpacing: 1.80,
                 ),
               ),
             ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          SizedBox(
-            width: 300,
-            height: 60,
-            child: OutlinedButton(
-              onPressed: (){
-                Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=> const LoginPage(),),);
-              },
-              style: OutlinedButton.styleFrom(
-                shape: const StadiumBorder(),
-                side: const BorderSide(width: 1, color: Color(0xFF000066))
-              ),
-              child: Text(
-                'Login',
-                style: GoogleFonts.manrope(
-                  color: const Color(0xFF000066),
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
-                  height: 0,
-                  letterSpacing: 1.80,
-                ),
-              ),
-            ),
-          )
-        ]),
+          ]
+        ),
       ),
     );
   }
