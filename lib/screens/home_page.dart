@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:greenbook/providers/user_provider.dart';
+import 'package:greenbook/screens/gardeners_page.dart';
+import 'package:greenbook/screens/leaderboard_page.dart';
+import 'package:greenbook/screens/profile_page.dart';
 import 'package:greenbook/widgets/gardener_grid_box.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,6 +19,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserProvider>(context).user;
+
     return Container(
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
@@ -33,7 +40,7 @@ class _HomePageState extends State<HomePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Welcome, Username!',
+                'Welcome, ${user.username}!',
                 style: GoogleFonts.manrope(
                   color: const Color(0xFF20411B),
                   fontSize: 14,
@@ -51,13 +58,18 @@ class _HomePageState extends State<HomePage> {
                   height: 0,
                   letterSpacing: 1.40,
                 ),
-              ),
+              )
             ],
           ),
-          actions: const [
-            CircleAvatar(
-              radius: 50,
-              backgroundImage: AssetImage('assets/images/user.png'),
+          actions: [
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).push((MaterialPageRoute(builder: (ctx)=> const ProfilePage(),)));
+              },
+              child: const CircleAvatar(
+                radius: 50,
+                backgroundImage: AssetImage('assets/images/user.png'),
+              ),
             )
           ],
         ),
@@ -88,7 +100,10 @@ class _HomePageState extends State<HomePage> {
                   contentPadding: const EdgeInsets.all(20),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide.none,
+                    borderSide: const BorderSide(
+                      width: 1,
+                      color: Colors.grey
+                    ),
                   ),
                 ),         
               ),
@@ -146,7 +161,7 @@ class _HomePageState extends State<HomePage> {
                         height: 40,
                         child: ElevatedButton(
                           onPressed: (){
-                            // Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=> const RegisterPage(),),);
+                            Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=> const LeaderboardPage(),),);
                           },
                           style: ButtonStyle(
                             backgroundColor:
@@ -199,13 +214,18 @@ class _HomePageState extends State<HomePage> {
                           letterSpacing: 0.70,
                         ),
                       ),
-                      Text(
-                        'View All',
-                        style: GoogleFonts.manrope(
-                          color: const Color(0xFF000066),
-                          fontSize: 8,
-                          fontWeight: FontWeight.w400,
-                          height: 0,
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push((MaterialPageRoute(builder: (ctx)=> const GardenersPage(),)));
+                        },
+                        child: Text(
+                          'View All',
+                          style: GoogleFonts.manrope(
+                            color: const Color(0xFF000066),
+                            fontSize: 8,
+                            fontWeight: FontWeight.w400,
+                            height: 0,
+                          ),
                         ),
                       ),
                     ],
@@ -360,7 +380,7 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               Row(
                                 children: [
-                                  IconButton(onPressed: null, icon: Icon(Icons.thumb_up, color: Colors.black,)),
+                                  const IconButton(onPressed: null, icon: Icon(Icons.thumb_up, color: Colors.black,)),
                                   Text(
                                     'XXKM Likes',
                                     style: GoogleFonts.manrope(
@@ -375,7 +395,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                               Row(
                                 children: [
-                                  IconButton(onPressed: null, icon: Icon(Icons.comment, color: Colors.black,)),
+                                  const IconButton(onPressed: null, icon: Icon(Icons.comment, color: Colors.black,)),
                                   Text(
                                     'XX Comments',
                                     style: GoogleFonts.manrope(
@@ -390,7 +410,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                               Row(
                                 children: [
-                                  IconButton(onPressed: null, icon: Icon(Icons.share, color: Colors.black,)),
+                                  const IconButton(onPressed: null, icon: Icon(Icons.share, color: Colors.black,)),
                                   Text(
                                     'Share',
                                     style: GoogleFonts.manrope(

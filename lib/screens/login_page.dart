@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:greenbook/screens/home_page.dart';
 import 'package:greenbook/screens/register_page.dart';
+import 'package:greenbook/services/auth_services.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -11,6 +12,19 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  
+  final AuthService authService = AuthService();
+
+  void loginUser() {
+    authService.loginUser(
+      context: context, 
+      email: emailController.text, 
+      password: passwordController.text
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -71,10 +85,11 @@ class _LoginPageState extends State<LoginPage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: TextField(
+                controller: emailController,
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: Colors.white.withOpacity(0.8),
-                  hintText: 'Username',
+                  hintText: 'Email',
                   hintStyle: const TextStyle(color: Colors.grey),
                   contentPadding: const EdgeInsets.all(20),
                   border: OutlineInputBorder(
@@ -90,6 +105,7 @@ class _LoginPageState extends State<LoginPage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: TextField(
+                controller: passwordController,
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: Colors.white.withOpacity(0.8),
@@ -111,7 +127,7 @@ class _LoginPageState extends State<LoginPage> {
               height: 60,
               child: OutlinedButton(
                 onPressed: (){
-                  Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=> const HomePage(),),);
+                  loginUser();
                 },
                 style: OutlinedButton.styleFrom(
                   shape: const StadiumBorder(),
