@@ -376,7 +376,7 @@ class _HomePageState extends State<HomePage> {
                         child: Align(
                           alignment: Alignment.bottomCenter,
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Row(
                                 children: [
@@ -393,34 +393,34 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                 ]
                               ),
-                              Row(
-                                children: [
-                                  const IconButton(onPressed: null, icon: Icon(Icons.comment, color: Colors.black,)),
-                                  Text(
-                                    'XX Comments',
-                                    style: GoogleFonts.manrope(
-                                      color: const Color(0xFF23401E),
-                                      fontSize: 8,
-                                      fontWeight: FontWeight.w700,
-                                      height: 0,
-                                      letterSpacing: 0.25,
-                                    ),
-                                  ),
-                                ]
-                              ),
+                              // Row(
+                              //   children: [
+                              //     const IconButton(onPressed: null, icon: Icon(Icons.comment, color: Colors.black,)),
+                              //     Text(
+                              //       'XX Comments',
+                              //       style: GoogleFonts.manrope(
+                              //         color: const Color(0xFF23401E),
+                              //         fontSize: 8,
+                              //         fontWeight: FontWeight.w700,
+                              //         height: 0,
+                              //         letterSpacing: 0.25,
+                              //       ),
+                              //     ),
+                              //   ]
+                              // ),
                               Row(
                                 children: [
                                   const IconButton(onPressed: null, icon: Icon(Icons.share, color: Colors.black,)),
-                                  Text(
-                                    'Share',
-                                    style: GoogleFonts.manrope(
-                                      color: const Color(0xFF23401E),
-                                      fontSize: 8,
-                                      fontWeight: FontWeight.w700,
-                                      height: 0,
-                                      letterSpacing: 0.25,
-                                    ),
-                                  ),
+                                  // Text(
+                                  //   'Share',
+                                  //   style: GoogleFonts.manrope(
+                                  //     color: const Color(0xFF23401E),
+                                  //     fontSize: 8,
+                                  //     fontWeight: FontWeight.w700,
+                                  //     height: 0,
+                                  //     letterSpacing: 0.25,
+                                  //   ),
+                                  // ),
                                 ]
                               ),
                             ],

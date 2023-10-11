@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:greenbook/screens/login_page.dart';
 import 'package:greenbook/services/auth_services.dart';
+import 'package:greenbook/utils/utils.dart';
 import 'package:image_picker/image_picker.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -255,6 +256,11 @@ class _RegisterPageState extends State<RegisterPage> {
                   // Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=> const RegisterPage(),),);
                   if(passwordController.text == confirmPasswordController.text) {
                     registerUser();
+                  } else {
+                    showSnackBar(
+                      context, 
+                      'Passwords do not match'
+                    );
                   }
                 },
                 style: ButtonStyle(
