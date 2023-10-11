@@ -66,9 +66,9 @@ class _HomePageState extends State<HomePage> {
               onTap: () {
                 Navigator.of(context).push((MaterialPageRoute(builder: (ctx)=> const ProfilePage(),)));
               },
-              child: const CircleAvatar(
+              child: CircleAvatar(
                 radius: 50,
-                backgroundImage: AssetImage('assets/images/user.png'),
+                backgroundImage: AssetImage('backend/images/${user.profilePicture}'),
               ),
             )
           ],

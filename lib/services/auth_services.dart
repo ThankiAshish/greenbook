@@ -11,6 +11,7 @@ import 'package:greenbook/utils/utils.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http_parser/http_parser.dart';
 
 class AuthService {
   void registerUser({
@@ -59,10 +60,6 @@ class AuthService {
       request.fields['email'] = email;
       request.fields['password'] = password;
 
-      request.headers.addAll({
-        "Content-Type": "multipart/form-data",
-      });
-
       print(profilePicture);
 
       final imageFile = File(profilePicture);
@@ -72,31 +69,37 @@ class AuthService {
       // final multipartFile = http.MultipartFile.fromBytes('photo', bytes);
       // final multipartFile = http.MultipartFile('photo', imageFile.readAsBytes().asStream(), imageFile.lengthSync(), filename: imageFile.path.split("/").last);
       //final multipartFile = http.MultipartFile.fromBytes('photo', bytes, filename: imageFile.path.split("/").last);
-      final multipartFile = await http.MultipartFile.fromPath('photo', imageFile.path);
+      String extension = imageFile.path.split('.').last;
+      final multipartFile = await http.MultipartFile.fromPath('photo', imageFile.path, contentType: MediaType('image', extension));
 
       print(multipartFile.filename);
       request.files.add(multipartFile);
 
+      request.headers.addAll({
+        "Content-Type": "multipart/form-data",
+        "content-disposition": 'form-data; name="photo"; filename="${multipartFile.filename}"'
+      });
+
       final response = await request.send();
 
-      // if (response.statusCode == 200) {
-      //   final responseBody = await response.stream.bytesToString();
-      //   final userData = json.decode(responseBody);
+      if (response.statusCode == 200) {
+        final responseBody = await response.stream.bytesToString();
+        final userData = json.decode(responseBody);
 
-      //   // ignore: use_build_context_synchronously
-      //   showSnackBar(
-      //        context, 
-      //        'Account Created!, Now you can Login!'
-      //   );
-      // } else {
-      //   // ignore: use_build_context_synchronously
-      //   showSnackBar(
-      //        context, 
-      //        'Failed to Create Account!'
-      //   );
-      // }
+        // ignore: use_build_context_synchronously
+        showSnackBar(
+             context, 
+             'Account Created!, Now you can Login!'
+        );
+      } else {
+        // ignore: use_build_context_synchronously
+        showSnackBar(
+             context, 
+             'Failed to Create Account!'
+        );
+      }
 
-      print(await response.stream.bytesToString());
+      // await response.stream.bytesToString();
 
     } catch (error) {
       // ignore: use_build_context_synchronously
