@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:greenbook/models/user.dart';
@@ -17,37 +18,86 @@ class AuthService {
     required String name, 
     required String email,
     required String username,
-    required String password
+    required String password,
+    required dynamic profilePicture
   }) async {
     try {
-      User user = User(
-        id: '',
-        name: name,
-        email: email,
-        username: username,
-        password: password,
-        token: '',
-      );
+      // User user = User(
+      //   id: '',
+      //   name: name,
+      //   email: email,
+      //   username: username,
+      //   password: password,
+      //   token: '',
+      //   profilePicture: ''
+      // );
 
-      http.Response res = await http.post(
-        Uri.parse('${Constants.uri}/api/register'),
-        body: user.toJson(),
-        headers: <String, String> {
-          'Content-Type': 'application/json; charset=UTF-8',
-        }
-      );
+      // http.Response res = await http.post(
+      //   Uri.parse('${Constants.uri}/api/register'),
+      //   body: user.toJson(),
+      //   headers: <String, String> {
+      //     'Content-Type': 'application/json; charset=UTF-8',
+      //   }
+      // );
 
-      // ignore: use_build_context_synchronously
-      httpErrorHandle(
-        response:  res,
-        context: context,
-        onSuccess: () {
-          showSnackBar(
-            context, 
-            'Account Created!, Now you can Login!'
-          );
-        }
-      );
+      // // ignore: use_build_context_synchronously
+      // httpErrorHandle(
+      //   response:  res,
+      //   context: context,
+      //   onSuccess: () {
+      //     showSnackBar(
+      //       context, 
+      //       'Account Created!, Now you can Login!'
+      //     );
+      //   }
+      // );
+
+      final uri = Uri.parse('${Constants.uri}/api/register');
+      final request = http.MultipartRequest('POST', uri);
+      request.fields['name'] = name;
+      request.fields['username'] = username;
+      request.fields['email'] = email;
+      request.fields['password'] = password;
+
+      request.headers.addAll({
+        "Content-Type": "multipart/form-data",
+      });
+
+      print(profilePicture);
+
+      final imageFile = File(profilePicture);
+      final bytes = imageFile.readAsBytesSync();
+
+      // final imageFile = await http.MultipartFile.fromPath('photo', profilePicture);
+      // final multipartFile = http.MultipartFile.fromBytes('photo', bytes);
+      // final multipartFile = http.MultipartFile('photo', imageFile.readAsBytes().asStream(), imageFile.lengthSync(), filename: imageFile.path.split("/").last);
+      //final multipartFile = http.MultipartFile.fromBytes('photo', bytes, filename: imageFile.path.split("/").last);
+      final multipartFile = await http.MultipartFile.fromPath('photo', imageFile.path);
+
+      print(multipartFile.filename);
+      request.files.add(multipartFile);
+
+      final response = await request.send();
+
+      // if (response.statusCode == 200) {
+      //   final responseBody = await response.stream.bytesToString();
+      //   final userData = json.decode(responseBody);
+
+      //   // ignore: use_build_context_synchronously
+      //   showSnackBar(
+      //        context, 
+      //        'Account Created!, Now you can Login!'
+      //   );
+      // } else {
+      //   // ignore: use_build_context_synchronously
+      //   showSnackBar(
+      //        context, 
+      //        'Failed to Create Account!'
+      //   );
+      // }
+
+      print(await response.stream.bytesToString());
+
     } catch (error) {
       // ignore: use_build_context_synchronously
       showSnackBar(context, error.toString());

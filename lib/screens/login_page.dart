@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:greenbook/screens/home_page.dart';
 import 'package:greenbook/screens/register_page.dart';
 import 'package:greenbook/services/auth_services.dart';
 

@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:greenbook/screens/login_page.dart';
 import 'package:greenbook/services/auth_services.dart';
+import 'package:image_picker/image_picker.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -17,6 +20,10 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
   
+  var picker = ImagePicker();
+  late dynamic pickedFile;
+  late dynamic imagePath;
+
   final AuthService authService = AuthService();
 
   void registerUser() {
@@ -25,8 +32,15 @@ class _RegisterPageState extends State<RegisterPage> {
       name: nameController.text, 
       email: emailController.text, 
       username: usernameController.text, 
-      password: passwordController.text
+      password: passwordController.text,
+      profilePicture: imagePath
     );
+  }
+
+  @override
+  void initState() {
+    imagePath = "";
+    super.initState();
   }
 
   @override
@@ -65,48 +79,61 @@ class _RegisterPageState extends State<RegisterPage> {
               const SizedBox(
                 height: 10,
               ),
-              // Stack(
-              //   alignment: Alignment.bottomRight,
-              //   children: [
-              //     Container(
-              //       width: 130,
-              //       height: 130,
-              //       decoration: BoxDecoration(
-              //           border: Border.all(width: 4, color: Colors.white),
-              //           boxShadow: [
-              //             BoxShadow(
-              //                 spreadRadius: 2,
-              //                 blurRadius: 10,
-              //                 color: Colors.black.withOpacity(0.1))
-              //           ],
-              //           shape: BoxShape.circle,
-              //           image: const DecorationImage(
-              //               fit: BoxFit.cover,
-              //               image: NetworkImage(
-              //                   'https://cdn.pixabay.com/photo/2018/11/13/21/43/avatar-3814049_640.png'
-              //               )
-              //           )
-              //       ),
-              //     ),
-              //     Positioned(
-              //       right: 0,
-              //       bottom: 0,
-              //       child: Container(
-              //         decoration: const BoxDecoration(
-              //           color: Colors.white,
-              //           shape: BoxShape.circle,
-              //         ),
-              //         child: const IconButton(
-              //           icon: Icon(
-              //             Icons.add,
-              //             color: Colors.black,
-              //           ),
-              //           onPressed: null,
-              //         ),
-              //       ),
-              //     )
-              //   ],
-              // ),
+              GestureDetector(
+                onTap: () async {
+                  pickedFile = await picker.pickImage(source: ImageSource.gallery);
+                  if(pickedFile != null) {
+                    File imageFile = File(pickedFile.path);
+                    imagePath = imageFile.path;
+                  setState(() {});
+                  }
+                },
+                child: Stack(
+                  alignment: Alignment.bottomRight,
+                  children: [
+                    Container(
+                      width: 130,
+                      height: 130,
+                      decoration: BoxDecoration(
+                          border: Border.all(width: 4, color: Colors.white),
+                          boxShadow: [
+                            BoxShadow(
+                                spreadRadius: 2,
+                                blurRadius: 10,
+                                color: Colors.black.withOpacity(0.1))
+                          ],
+                          shape: BoxShape.circle,
+                          image: imagePath == "" ? const DecorationImage(
+                              fit: BoxFit.cover,
+                              image: NetworkImage(
+                                  'https://cdn.pixabay.com/photo/2018/11/13/21/43/avatar-3814049_640.png'
+                              )
+                          ) : DecorationImage(
+                              fit: BoxFit.cover,
+                              image: Image.file(File(imagePath)).image
+                          ),
+                      ),
+                    ), 
+                    Positioned(
+                      right: 0,
+                      bottom: 0,
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                        ),
+                        child: const IconButton(
+                          icon: Icon(
+                            Icons.add,
+                            color: Colors.black,
+                          ),
+                          onPressed: null,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
               Text(
                 'Please Enter Your Details',
                 style: GoogleFonts.manrope(

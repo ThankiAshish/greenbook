@@ -7,6 +7,7 @@ class User {
   final String username; 
   final String token;
   final String password;
+  final dynamic profilePicture;
 
   User ({
     required this.id,
@@ -15,6 +16,7 @@ class User {
     required this.username,
     required this.token,
     required this.password,
+    required this.profilePicture
   });
 
   Map<String, dynamic> toMap() {
@@ -23,7 +25,8 @@ class User {
       'email': email,
       'username': username,
       'token': token,
-      'password': password
+      'password': password,
+      'profilePicture': profilePicture
     };
   }
 
@@ -35,6 +38,7 @@ class User {
       username: map['username'] ?? '',
       token: map['token'] ?? '',
       password: map['password'] ?? '',
+      profilePicture: map['profilePicture'] ?? ''
     );
   }
 

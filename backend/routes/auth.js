@@ -1,13 +1,42 @@
 const express = require('express');
 const authRouter = express.Router();
 const bcryptjs = require('bcryptjs');
+const multer = require('multer');
+const { v4: uuidv4 } = require('uuid');
+const path = require('path');
 const User = require('../models/user.model');
 const jwt = require('jsonwebtoken');
 const auth = require('../middleware/auth');
 
-authRouter.post('/api/register', async (req, res) => {
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, 'images');
+    },
+    filename: function(req, file, cb) {   
+        cb(null, uuidv4() + '-' + Date.now() + path.extname(file.originalname));
+    }
+});
+
+const fileFilter = (req, file, cb) => {
+    const allowedFileTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+    if(allowedFileTypes.includes(file.mimetype)) {
+        cb(null, true);
+    } else {
+        cb(null, false);
+    }
+}
+
+let upload = multer({ storage, fileFilter });
+
+authRouter.post('/api/register', upload.single('photo'), async (req, res) => {
+    console.log(req.body);
+    console.log(req.file);
+    
     try {
-        const { name, username, email, password, profilePicture } = req.body;
+        const { name, username, email, password } = req.body;
+        const photo = req.file.filename;
+        
+
         const existingUser = await User.findOne({ email });
         if(existingUser) {
             return res.status(400).json({
@@ -21,7 +50,7 @@ authRouter.post('/api/register', async (req, res) => {
             username,
             email,
             password: hashedPassword,
-            profilePicture
+            profilePicture: photo
         });
 
         user = await user.save();
