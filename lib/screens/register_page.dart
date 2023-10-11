@@ -135,18 +135,8 @@ class _RegisterPageState extends State<RegisterPage> {
                   ],
                 ),
               ),
-              Text(
-                'Please Enter Your Details',
-                style: GoogleFonts.manrope(
-                  color: Colors.black,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                  height: 0,
-                  letterSpacing: 2.40,
-                ),
-              ),
               const SizedBox(
-                height: 20,
+                height: 30,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -246,21 +236,27 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
               ),
             const SizedBox(
-              height: 40,
+              height: 20,
             ),
             SizedBox(
-              width: 300,
+              width: 325,
               height: 60,
               child: ElevatedButton(
                 onPressed: (){
-                  // Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=> const RegisterPage(),),);
-                  if(passwordController.text == confirmPasswordController.text) {
-                    registerUser();
-                  } else {
+                  if(imagePath == null || usernameController.text.isEmpty || nameController.text.isEmpty || emailController.text.isEmpty || passwordController.text.isEmpty) {
                     showSnackBar(
                       context, 
-                      'Passwords do not match'
+                      'All Fields are Required!'
                     );
+                  } else {
+                    if(passwordController.text == confirmPasswordController.text) {
+                      registerUser();
+                    } else {
+                      showSnackBar(
+                        context, 
+                        'Passwords do not match'
+                      );
+                    }
                   }
                 },
                 style: ButtonStyle(
@@ -290,31 +286,29 @@ class _RegisterPageState extends State<RegisterPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
+                Text(
                   'Already Have an Account? ', 
-                  style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14,
-                        fontFamily: 'Manrope',
-                        fontWeight: FontWeight.w400,
-                        height: 0,
-                        letterSpacing: 1.40,
-                  )
+                  style: GoogleFonts.manrope(
+                    color: Colors.black,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    height: 0,
+                    letterSpacing: 1.40,
+                  ),
                 ),
                 GestureDetector(
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=> const LoginPage(),),);
                   },
-                  child: const Text(
+                  child: Text(
                     'Login', 
-                    style: TextStyle(
-                      color: Color(0xFF000066),
+                    style: GoogleFonts.manrope(
+                      color: const Color(0xFF000066),
                       fontSize: 14,
-                      fontFamily: 'Manrope',
                       fontWeight: FontWeight.w700,
                       height: 0,
                       letterSpacing: 1.40,
-                    )
+                    ),
                   ),
                 ),
               ],

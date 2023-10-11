@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:greenbook/screens/register_page.dart';
 import 'package:greenbook/services/auth_services.dart';
+import 'package:greenbook/utils/utils.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -54,130 +55,138 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ),
         backgroundColor: Colors.transparent,
-        body: Column(
-          children: [
-            const SizedBox(
-              height: 10,
-            ),
-            Image.asset(
-              "assets/images/login.png",
-              width: 220,
-              height: 220,
-              fit: BoxFit.cover,
-            ),
-            const SizedBox(
-              height: 80,
-            ),
-            Text(
-              "Please Verify it's You",
-              style: GoogleFonts.manrope(
-                color: Colors.black,
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-                height: 0,
-                letterSpacing: 2.40,
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 10,
               ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: TextField(
-                controller: emailController,
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white.withOpacity(0.8),
-                  hintText: 'Email',
-                  hintStyle: const TextStyle(color: Colors.grey),
-                  contentPadding: const EdgeInsets.all(20),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide.none,
-                  ),
-                ),         
+              Image.asset(
+                "assets/images/login.png",
+                width: 220,
+                height: 220,
+                fit: BoxFit.cover,
               ),
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: TextField(
-                controller: passwordController,
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white.withOpacity(0.8),
-                  hintText: 'Password',
-                  hintStyle: const TextStyle(color: Colors.grey),
-                  contentPadding: const EdgeInsets.all(20),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide.none,
-                  ),
-                ),         
+              const SizedBox(
+                height: 60,
               ),
-            ),
-            const SizedBox(
-              height: 120,
-            ),
-            SizedBox(
-              width: 300,
-              height: 60,
-              child: OutlinedButton(
-                onPressed: (){
-                  loginUser();
-                },
-                style: OutlinedButton.styleFrom(
-                  shape: const StadiumBorder(),
-                  side: const BorderSide(width: 1, color: Color(0xFF000066))
-                ),
-                child: Text(
-                  'Login',
-                  style: GoogleFonts.manrope(
-                    color: const Color(0xFF000066),
-                    fontSize: 18,
-                    fontWeight: FontWeight.w700,
-                    height: 0,
-                    letterSpacing: 1.80,
-                  ),
+              Text(
+                "Please Verify it's You",
+                style: GoogleFonts.manrope(
+                  color: Colors.black,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                  height: 0,
+                  letterSpacing: 2.40,
                 ),
               ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Don't Have an Account ? ", 
-                  style: GoogleFonts.manrope(
-                    color: Colors.black,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                    height: 0,
-                    letterSpacing: 1.40,
-                  ),
+              const SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: TextField(
+                  controller: emailController,
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.white.withOpacity(0.8),
+                    hintText: 'Email',
+                    hintStyle: const TextStyle(color: Colors.grey),
+                    contentPadding: const EdgeInsets.all(20),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide.none,
+                    ),
+                  ),         
                 ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => const RegisterPage(),),);
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: TextField(
+                  controller: passwordController,
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.white.withOpacity(0.8),
+                    hintText: 'Password',
+                    hintStyle: const TextStyle(color: Colors.grey),
+                    contentPadding: const EdgeInsets.all(20),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide.none,
+                    ),
+                  ),         
+                ),
+              ),
+              const SizedBox(
+                height: 80,
+              ),
+              SizedBox(
+                width: 300,
+                height: 60,
+                child: OutlinedButton(
+                  onPressed: (){
+                    if(emailController.text.isEmpty || passwordController.text.isEmpty) {
+                      showSnackBar(
+                        context,
+                        'All Fields are Required!'
+                      );
+                    }
+                    loginUser();
                   },
+                  style: OutlinedButton.styleFrom(
+                    shape: const StadiumBorder(),
+                    side: const BorderSide(width: 1, color: Color(0xFF000066))
+                  ),
                   child: Text(
-                    'Register', 
+                    'Login',
                     style: GoogleFonts.manrope(
                       color: const Color(0xFF000066),
-                      fontSize: 14,
+                      fontSize: 18,
                       fontWeight: FontWeight.w700,
+                      height: 0,
+                      letterSpacing: 1.80,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Don't Have an Account ? ", 
+                    style: GoogleFonts.manrope(
+                      color: Colors.black,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
                       height: 0,
                       letterSpacing: 1.40,
                     ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => const RegisterPage(),),);
+                    },
+                    child: Text(
+                      'Register', 
+                      style: GoogleFonts.manrope(
+                        color: const Color(0xFF000066),
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                        height: 0,
+                        letterSpacing: 1.40,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

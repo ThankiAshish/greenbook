@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:greenbook/models/user.dart';
 import 'package:greenbook/providers/user_provider.dart';
 import 'package:greenbook/screens/home_page.dart';
 import 'package:greenbook/screens/login_page.dart';
