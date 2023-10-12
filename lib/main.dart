@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:greenbook/providers/user_provider.dart';
-import 'package:greenbook/screens/register_page.dart';
+import 'package:greenbook/screens/home_page.dart';
+import 'package:greenbook/screens/login_page.dart';
 import 'package:greenbook/screens/welcome_page.dart';
 import 'package:greenbook/services/auth_services.dart';
 import 'package:provider/provider.dart';
@@ -35,8 +36,12 @@ class _MainAppState extends State<MainApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        useMaterial3: true,
+        colorSchemeSeed: Colors.green,
+      ),
       debugShowCheckedModeBanner: false,
-      home: Provider.of<UserProvider>(context).user.token.isEmpty ? const RegisterPage() : const WelcomePage()
+      home: Provider.of<UserProvider>(context).user.token.isEmpty ? const LoginPage() : const WelcomePage()
     );
   }
 }

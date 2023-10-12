@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:greenbook/screens/register_page.dart';
 import 'package:greenbook/services/auth_services.dart';
 import 'package:greenbook/utils/utils.dart';
+import 'package:greenbook/widgets/custom_primary_outlined_button.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -123,34 +124,14 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(
                 height: 80,
               ),
-              SizedBox(
-                width: 300,
-                height: 60,
-                child: OutlinedButton(
-                  onPressed: (){
-                    if(emailController.text.isEmpty || passwordController.text.isEmpty) {
-                      showSnackBar(
-                        context,
-                        'All Fields are Required!'
-                      );
-                    }
-                    loginUser();
-                  },
-                  style: OutlinedButton.styleFrom(
-                    shape: const StadiumBorder(),
-                    side: const BorderSide(width: 1, color: Color(0xFF000066))
-                  ),
-                  child: Text(
-                    'Login',
-                    style: GoogleFonts.manrope(
-                      color: const Color(0xFF000066),
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700,
-                      height: 0,
-                      letterSpacing: 1.80,
-                    ),
-                  ),
-                ),
+              CustomPrimaryOutlinedButton(
+                text: 'Login', 
+                width: 325, 
+                height: 60, 
+                textSize: 18, 
+                borderColor: const Color(0xFF000066), 
+                textColor: const Color(0xFF000066), 
+                onPressed: loginButtonOnClick
               ),
               const SizedBox(
                 height: 20,
@@ -190,5 +171,15 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  loginButtonOnClick () {
+    if(emailController.text.isEmpty || passwordController.text.isEmpty) {
+      showSnackBar(
+        context,
+        'All Fields are Required!'
+      );
+    }
+    loginUser();
   }
 }
