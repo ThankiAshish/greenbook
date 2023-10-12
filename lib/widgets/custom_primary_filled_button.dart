@@ -6,12 +6,12 @@ class CustomPrimaryFilledButton extends StatelessWidget {
     {
       Key? key,
       required this.text,
-      required this.color,
       required this.width,
       required this.height,
-      required this.textColor,
       required this.textSize,
-      required this.onPressed
+      required this.onPressed,
+      this.color,
+      this.textColor,
     }
   ) : super(key: key);
 
@@ -19,8 +19,8 @@ class CustomPrimaryFilledButton extends StatelessWidget {
   final double width;
   final double height;
   final double textSize;
-  final Color color;
-  final Color textColor;
+  final Color? color;
+  final Color? textColor;
   final void Function()? onPressed;
   
   @override
@@ -31,8 +31,8 @@ class CustomPrimaryFilledButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ButtonStyle(
-          backgroundColor:
-              MaterialStateProperty.all<Color>(color),
+          // backgroundColor:
+          //     MaterialStateProperty.all<Color>(color),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(50),
@@ -42,7 +42,7 @@ class CustomPrimaryFilledButton extends StatelessWidget {
         child: Text(
           text,
           style: GoogleFonts.manrope(
-            color: textColor,
+            // color: textColor,
             fontSize: textSize,
             fontWeight: FontWeight.w700,
             height: 0,

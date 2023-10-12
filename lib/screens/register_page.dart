@@ -49,121 +49,88 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height,
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment(0.34202014, -1.3),
-          end: Alignment(-0.11, 10.0),
-          colors: [Colors.white, Color(0x66D3FF76)],
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          'Register',
+          style: GoogleFonts.manrope(
+            fontSize: 20,
+            fontWeight: FontWeight.w500,
+            height: 0,
+            letterSpacing: 2,
+          ),
         ),
       ),
-      child: Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          iconTheme: const IconThemeData(color: Colors.black),
-          backgroundColor: Colors.transparent,
-          shadowColor: Colors.transparent,
-          title: Text(
-            'Register',
-            style: GoogleFonts.manrope(
-              color: const Color(0xFF000066),
-              fontSize: 20,
-              fontWeight: FontWeight.w500,
-              height: 0,
-              letterSpacing: 2,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 10,
             ),
-          ),
-        ),
-        backgroundColor: Colors.transparent,
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 10,
-              ),
-              CustomImagePicker(
-                imagePath: imagePath, 
-                onTap: () async {
-                  pickedFile = await picker.pickImage(source: ImageSource.gallery);
-                  if(pickedFile != null) {
-                    File imageFile = File(pickedFile.path);
-                    imagePath = imageFile.path;
-                  setState(() {});
-                  }
-                }
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              CustomTextField(
-                controller: usernameController, 
-                fillColor: Colors.white.withOpacity(0.8), 
-                hintText: 'Username', 
-                hintColor: Colors.grey, 
-                keyboardType: TextInputType.text
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              CustomTextField(
-                controller: nameController, 
-                fillColor: Colors.white.withOpacity(0.8), 
-                hintText: 'Name', 
-                hintColor: Colors.grey, 
-                keyboardType: TextInputType.text
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              CustomTextField(
-                controller: emailController, 
-                fillColor: Colors.white.withOpacity(0.8), 
-                hintText: 'Email', 
-                hintColor: Colors.grey, 
-                keyboardType: TextInputType.emailAddress
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              CustomTextField(
-                controller: passwordController, 
-                fillColor: Colors.white.withOpacity(0.8), 
-                hintText: 'Password', 
-                hintColor: Colors.grey, 
-                keyboardType: TextInputType.text,
-                obsecureText: true,
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              CustomTextField(
-                controller: confirmPasswordController, 
-                fillColor: Colors.white.withOpacity(0.8), 
-                hintText: 'Confirm Password', 
-                hintColor: Colors.grey, 
-                keyboardType: TextInputType.text,
-                obsecureText: true,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              CustomPrimaryFilledButton(
-                text: 'Create Account', 
-                color: const Color(0xFF000066), 
-                width: 325, 
-                height: 60, 
-                textColor: const Color(0xFFF3F3F3), 
-                textSize: 18, 
-                onPressed: registerButtonOnClick
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              buttonFooterBuilder(),
-            ],
-          ),
+            CustomImagePicker(
+              imagePath: imagePath, 
+              onTap: imagePickerOnClick,
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            CustomTextField(
+              controller: usernameController, 
+              labelText: 'Username', 
+              keyboardType: TextInputType.text
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            CustomTextField(
+              controller: nameController, 
+              labelText: 'Name', 
+              keyboardType: TextInputType.text
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            CustomTextField(
+              controller: emailController, 
+              labelText: 'Email', 
+              keyboardType: TextInputType.emailAddress
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            CustomTextField(
+              controller: passwordController, 
+              labelText: 'Password', 
+              keyboardType: TextInputType.text,
+              obsecureText: true,
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            CustomTextField(
+              controller: confirmPasswordController, 
+              labelText: 'Confirm Password', 
+              keyboardType: TextInputType.text,
+              obsecureText: true,
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            CustomPrimaryFilledButton(
+              text: 'Create Account', 
+              color: const Color(0xFF000066), 
+              width: 325, 
+              height: 60, 
+              textColor: const Color(0xFFF3F3F3), 
+              textSize: 18, 
+              onPressed: registerButtonOnClick
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            buttonFooterBuilder(),
+          ],
         ),
       ),
     );
@@ -176,7 +143,6 @@ class _RegisterPageState extends State<RegisterPage> {
         Text(
           'Already Have an Account? ', 
           style: GoogleFonts.manrope(
-            color: Colors.black,
             fontSize: 14,
             fontWeight: FontWeight.w400,
             height: 0,
@@ -190,7 +156,7 @@ class _RegisterPageState extends State<RegisterPage> {
           child: Text(
             'Login', 
             style: GoogleFonts.manrope(
-              color: const Color(0xFF000066),
+              color: Colors.green.shade900,
               fontSize: 14,
               fontWeight: FontWeight.w700,
               height: 0,
@@ -223,6 +189,15 @@ class _RegisterPageState extends State<RegisterPage> {
           'Passwords do not match'
         );
       }
+    }
+  }
+
+  void imagePickerOnClick () async {
+    pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    if(pickedFile != null) {
+      File imageFile = File(pickedFile.path);
+      imagePath = imageFile.path;
+      setState(() {});
     }
   }
 }

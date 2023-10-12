@@ -5,21 +5,23 @@ class CustomTextField extends StatelessWidget {
     {
       Key? key,
       required this.controller,
-      required this.fillColor,
-      required this.hintText,
-      required this.hintColor,
       required this.keyboardType,
+      required this.labelText,
+      this.hintText,
       this.obsecureText,
       this.obsecuringCharacter,
+      this.fillColor,
+      this.hintColor,
     }
   )
   : super(key: key);
 
   final TextEditingController controller;
   final TextInputType keyboardType;
+  final String labelText;
   final bool? obsecureText;
   final String? obsecuringCharacter;
-  final String hintText;
+  final String? hintText;
   final Color? hintColor;
   final Color? fillColor;
 
@@ -34,13 +36,13 @@ class CustomTextField extends StatelessWidget {
         obscuringCharacter: obsecuringCharacter ?? '*',
         decoration: InputDecoration(
           filled: true,
-          fillColor: fillColor ?? Colors.white.withOpacity(0.8),
-          hintText: hintText,
-          hintStyle: TextStyle(color: hintColor ?? Colors.grey),
-          contentPadding: const EdgeInsets.all(20),
+          // fillColor: fillColor ?? Colors.white.withOpacity(0.8),
+          labelText: labelText,
+          // hintStyle: TextStyle(color: hintColor ?? Colors.grey),
+          contentPadding: const EdgeInsets.all(15),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide.none,
+            // borderSide: BorderSide.none,
           ),
         ),         
       ),

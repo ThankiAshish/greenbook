@@ -26,12 +26,12 @@ class CustomImagePicker extends StatelessWidget {
             width: 130,
             height: 130,
             decoration: BoxDecoration(
-                border: Border.all(width: 4, color: Colors.white),
+                border: Border.all(width: 4, color: Colors.green.shade100),
                 boxShadow: [
                   BoxShadow(
                       spreadRadius: 2,
-                      blurRadius: 10,
-                      color: Colors.black.withOpacity(0.1))
+                      blurRadius: 2,
+                      color: Colors.green.withOpacity(0.1))
                 ],
                 shape: BoxShape.circle,
                 image: imagePath == "" ? const DecorationImage(
@@ -49,16 +49,16 @@ class CustomImagePicker extends StatelessWidget {
             right: 0,
             bottom: 0,
             child: Container(
-              decoration: const BoxDecoration(
-                color: Colors.white,
+              decoration: BoxDecoration(
+                color: Colors.green.shade100,
                 shape: BoxShape.circle,
               ),
-              child: const IconButton(
+              child: IconButton(
                 icon: Icon(
                   Icons.add,
-                  color: Colors.black,
+                  color: Colors.green.shade900,
                 ),
-                onPressed: null,
+                onPressed: onTap,
               ),
             ),
           )

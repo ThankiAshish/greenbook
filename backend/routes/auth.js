@@ -56,6 +56,7 @@ authRouter.post('/api/register', upload.single('photo'), async (req, res) => {
         user = await user.save();
         res.status(200).json(user);
     } catch(err) {
+        console.log(err.message);
         res.status(500).json({
             error: err.message
         });

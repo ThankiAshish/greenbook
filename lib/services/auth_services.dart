@@ -52,7 +52,7 @@ class AuthService {
       //   }
       // );
 
-      final uri = Uri.parse('${Constants.uri}/api/register');
+      final uri = Uri.parse('${Constants.homePCUri}/api/register');
       final request = http.MultipartRequest('POST', uri);
       request.fields['name'] = name;
       request.fields['username'] = username;
@@ -115,7 +115,7 @@ class AuthService {
       var userProvider = Provider.of<UserProvider>(context, listen: false);
       final navigator = Navigator.of(context);
       http.Response res = await http.post(
-        Uri.parse('${Constants.uri}/api/login'),
+        Uri.parse('${Constants.homePCUri}/api/login'),
         body: jsonEncode({
           'email': email,
           'password': password
