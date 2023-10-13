@@ -151,7 +151,7 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
         GestureDetector(
           onTap: () {
-            Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=> const LoginPage(),),);
+            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (ctx)=> const LoginPage(),),);
           },
           child: Text(
             'Login', 

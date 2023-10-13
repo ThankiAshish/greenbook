@@ -15,7 +15,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int currIndex = 0;
+  int _selectedIndex = 0;
+
+  final List<Widget> _pages = const<Widget>[
+    HomePage(),
+    ProfilePage(),
+    HomePage(),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +36,6 @@ class _HomePageState extends State<HomePage> {
             Text(
               'Welcome, ${user.username}!',
               style: GoogleFonts.manrope(
-                color: const Color(0xFF20411B),
                 fontSize: 14,
                 fontWeight: FontWeight.w300,
                 height: 0,
@@ -40,7 +45,6 @@ class _HomePageState extends State<HomePage> {
             Text(
               'X Points',
               style: GoogleFonts.manrope(
-                color: const Color(0xFF000066),
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
                 height: 0,
@@ -66,50 +70,20 @@ class _HomePageState extends State<HomePage> {
           const SizedBox(
             height: 20,
           ),
-          // Padding(
-          //   padding: const EdgeInsets.symmetric(horizontal: 20),
-          //   child: TextField(
-          //     decoration: InputDecoration(
-          //       prefixIcon: const Icon(
-          //         Icons.search,
-          //         color: Colors.grey,
-          //       ),
-          //       filled: true,
-          //       fillColor: Colors.white.withOpacity(0.8),
-          //       hintText: 'What are you Looking for?',
-          //       hintStyle: GoogleFonts.manrope(
-          //         color: const Color(0xFF20411B),
-          //         fontSize: 12,
-          //         fontWeight: FontWeight.w300,
-          //         height: 0,
-          //         letterSpacing: 1.80,
-          //       ),
-          //       contentPadding: const EdgeInsets.all(20),
-          //       border: OutlineInputBorder(
-          //         borderRadius: BorderRadius.circular(10),
-          //         borderSide: const BorderSide(
-          //           width: 1,
-          //           color: Colors.grey
-          //         ),
-          //       ),
-          //     ),         
-          //   ),
-          // ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: SearchAnchor.bar(
-              suggestionsBuilder:
-                (BuildContext context, SearchController controller) {
-                  return List<Widget>.generate(
-                    5,
-                    (int index) {
-                      return ListTile(
-                        titleAlignment: ListTileTitleAlignment.center,
-                        title: Text('Initial list item $index'),
-                      );
-                    },
-                  );
-                },
+              suggestionsBuilder: (BuildContext context, SearchController controller) {
+                return List<Widget>.generate(
+                  5,
+                  (int index) {
+                    return ListTile(
+                      titleAlignment: ListTileTitleAlignment.center,
+                      title: Text('Initial list item $index'),
+                    );
+                  },
+                );
+              },
             ),
           ),
           const SizedBox(
@@ -132,73 +106,76 @@ class _HomePageState extends State<HomePage> {
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Current Ranking',
-                            style: GoogleFonts.manrope(
-                              color: const Color(0xFF20411B),
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              height: 0,
-                              letterSpacing: 0.70,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Current Ranking',
+                              style: GoogleFonts.manrope(
+                                color: const Color(0xFF20411B),
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                height: 0,
+                                letterSpacing: 0.70,
+                              ),
                             ),
-                          ),
-                          Text(
-                            '#7803',
-                            style: GoogleFonts.manrope(
-                              color: const Color(0xFF233F1E),
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500,
-                              height: 0,
+                            Text(
+                              '#7803',
+                              style: GoogleFonts.manrope(
+                                color: const Color(0xFF233F1E),
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                                height: 0,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        // width: 120,
-                        // height: 40,
-                        child: ElevatedButton(
-                          onPressed: (){
-                            Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=> const LeaderboardPage(),),);
-                          },
-                          style: ButtonStyle(
-                            // backgroundColor:
-                            //     MaterialStateProperty.all<Color>(const Color(0xFFF3F3F3)),
-                            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(50),
+                          ],
+                        ),
+                        SizedBox(
+                          // width: 120,
+                          // height: 40,
+                          child: ElevatedButton(
+                            onPressed: (){
+                              Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=> const LeaderboardPage(),),);
+                            },
+                            style: ButtonStyle(
+                              // backgroundColor:
+                              //     MaterialStateProperty.all<Color>(const Color(0xFFF3F3F3)),
+                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                              ),
+                            ),
+                            child: Text(
+                              'Leaderboard',
+                              style: GoogleFonts.manrope(
+                                // color: const Color(0xFF000066),
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                height: 0,
                               ),
                             ),
                           ),
-                          child: Text(
-                            'Leaderboard',
-                            style: GoogleFonts.manrope(
-                              // color: const Color(0xFF000066),
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              height: 0,
-                            ),
-                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  Image.asset(
-                    'assets/images/bannerimage.png',
-                    width: 140,
-                    height: 140,
-                    fit: BoxFit.cover,
-                  ),
-                ],
+                      ],
+                    ),
+                    Image.asset(
+                      'assets/images/bannerimage.png',
+                      width: 140,
+                      height: 140,
+                      fit: BoxFit.cover,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -337,31 +314,30 @@ class _HomePageState extends State<HomePage> {
           ),
         ]
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        currentIndex: currIndex,
-        onTap: (int index) {
-          setState(() {
-            currIndex = index;
-          });
-        },
-        selectedItemColor: Colors.black,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add_circle),
-            label: 'Add',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.menu),
-            label: 'Menu',
-          ),
-        ],
-      ),
+      // bottomNavigationBar: BottomNavigationBar(
+      //   type: BottomNavigationBarType.fixed,
+      //   currentIndex: _selectedIndex,
+      //   onTap: (int index) {
+      //     setState(() {
+      //       _selectedIndex = index;
+      //     });
+      //   },
+      //   selectedItemColor: Colors.black,
+      //   items: const [
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.home),
+      //       label: 'Home',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.person),
+      //       label: 'Add',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.menu),
+      //       label: 'Menu',
+      //     ),
+      //   ],
+      // ),
     );
   }
 }

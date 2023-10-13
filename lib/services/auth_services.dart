@@ -22,37 +22,7 @@ class AuthService {
     required dynamic profilePicture
   }) async {
     try {
-      // User user = User(
-      //   id: '',
-      //   name: name,
-      //   email: email,
-      //   username: username,
-      //   password: password,
-      //   token: '',
-      //   profilePicture: ''
-      // );
-
-      // http.Response res = await http.post(
-      //   Uri.parse('${Constants.uri}/api/register'),
-      //   body: user.toJson(),
-      //   headers: <String, String> {
-      //     'Content-Type': 'application/json; charset=UTF-8',
-      //   }
-      // );
-
-      // // ignore: use_build_context_synchronously
-      // httpErrorHandle(
-      //   response:  res,
-      //   context: context,
-      //   onSuccess: () {
-      //     showSnackBar(
-      //       context, 
-      //       'Account Created!, Now you can Login!'
-      //     );
-      //   }
-      // );
-
-      final uri = Uri.parse('${Constants.homePCUri}/api/register');
+      final uri = Uri.parse('${Constants.uri}/api/register');
       final request = http.MultipartRequest('POST', uri);
       request.fields['name'] = name;
       request.fields['username'] = username;
@@ -63,11 +33,6 @@ class AuthService {
 
       final imageFile = File(profilePicture);
       final bytes = imageFile.readAsBytesSync();
-
-      // final imageFile = await http.MultipartFile.fromPath('photo', profilePicture);
-      // final multipartFile = http.MultipartFile.fromBytes('photo', bytes);
-      // final multipartFile = http.MultipartFile('photo', imageFile.readAsBytes().asStream(), imageFile.lengthSync(), filename: imageFile.path.split("/").last);
-      //final multipartFile = http.MultipartFile.fromBytes('photo', bytes, filename: imageFile.path.split("/").last);
       String extension = imageFile.path.split('.').last;
       final multipartFile = await http.MultipartFile.fromPath('photo', imageFile.path, contentType: MediaType('image', extension));
 
@@ -115,7 +80,7 @@ class AuthService {
       var userProvider = Provider.of<UserProvider>(context, listen: false);
       final navigator = Navigator.of(context);
       http.Response res = await http.post(
-        Uri.parse('${Constants.homePCUri}/api/login'),
+        Uri.parse('${Constants.uri}/api/login'),
         body: jsonEncode({
           'email': email,
           'password': password

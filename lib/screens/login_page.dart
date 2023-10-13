@@ -118,7 +118,7 @@ class _LoginPageState extends State<LoginPage> {
         ),
         GestureDetector(
           onTap: () {
-            Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => const RegisterPage(),),);
+            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (ctx) => const RegisterPage(),),);
           },
           child: Text(
             'Register', 
