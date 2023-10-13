@@ -4,7 +4,6 @@ import 'package:greenbook/screens/home_page.dart';
 import 'package:greenbook/screens/login_page.dart';
 import 'package:greenbook/screens/welcome_page.dart';
 import 'package:greenbook/services/auth_services.dart';
-import 'package:greenbook/widgets/bottom_nav_bar.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -42,7 +41,8 @@ class _MainAppState extends State<MainApp> {
         colorSchemeSeed: Colors.green,
       ),
       debugShowCheckedModeBanner: false,
-      home: Provider.of<UserProvider>(context).user.token.isEmpty ? const LoginPage() : const BottomNavBar()
+      home: Provider.of<UserProvider>(context).user.token.isEmpty ? const LoginPage() : const HomePage()
+      // home: const BottomNavBar(),
     );
   }
 }

@@ -17,12 +17,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
 
-  final List<Widget> _pages = const<Widget>[
-    HomePage(),
-    ProfilePage(),
-    HomePage(),
-  ];
-
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context).user;
@@ -314,30 +308,64 @@ class _HomePageState extends State<HomePage> {
           ),
         ]
       ),
-      // bottomNavigationBar: BottomNavigationBar(
-      //   type: BottomNavigationBarType.fixed,
-      //   currentIndex: _selectedIndex,
-      //   onTap: (int index) {
-      //     setState(() {
-      //       _selectedIndex = index;
-      //     });
-      //   },
-      //   selectedItemColor: Colors.black,
-      //   items: const [
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.home),
-      //       label: 'Home',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.person),
-      //       label: 'Add',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.menu),
-      //       label: 'Menu',
-      //     ),
-      //   ],
-      // ),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        currentIndex: _selectedIndex,
+        onTap: (int index) {
+          // setState(() {
+          //   _selectedIndex = index;
+          // });
+          if(index == 0) {
+            Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => const HomePage())
+            );
+          }
+          if(index == 1) {
+            Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => const ProfilePage())
+            );
+          }
+          if(index == 2) {
+            showModalBottomSheet(
+              context: context, 
+              builder: (BuildContext context) {
+                return SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: 400,
+                  child: Stack(
+                    children: [
+                      Positioned(
+                      right: 20,
+                      top: 20,
+                      child: GestureDetector(
+                        onTap: () => Navigator.pop(context),  
+                        child: const Icon(Icons.close)
+                      )
+                      ),
+                  ]),
+                );
+              }
+            );
+          }
+        },
+        selectedItemColor: Colors.black,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.menu),
+            label: 'Menu',
+          ),
+        ],
+      ),
     );
   }
+
+
 }
