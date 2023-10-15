@@ -61,19 +61,17 @@ storyRouter.post('/api/story/store', upload.single('photo'), async (req, res) =>
 storyRouter.put('/api/story/like', async (req, res) => {
     try {
         const { id, userId } = req.body;
-        await Story.findByIdAndUpdate({ userId: id}, {
-            $push: { likes: userId }
-        }, {
-            new: true
-        }).exec((err, result) => {
-            if(err) {
-                res.status(422).json({
-                    error: err.message
-                });
-            } else {
-                res.status(200).json(result);
-            }
-        });
+        // const res = await Story.findOneAndUpdate({ userId: id}, {
+        //     $push: { likes: userId }
+        // }, {
+        //     new: true
+        // });
+
+        const doc = await Story.findOne({ userId: userId });
+        doc.likes.push(id);
+        const response = await doc.save();
+
+        res.status(200).json(response);
     } catch (err) {
         res.status(500).json({
             error: err.message
@@ -84,19 +82,17 @@ storyRouter.put('/api/story/like', async (req, res) => {
 storyRouter.put('/api/story/unlike', async (req, res) => {
     try {
         const { id, userId } = req.body;
-        await Story.findByIdAndUpdate({ userId: id}, {
-            $pull: { likes: userId }
-        }, {
-            new: true
-        }).exec((err, result) => {
-            if(err) {
-                res.status(422).json({
-                    error: err.message
-                });
-            } else {
-                res.status(200).json(result);
-            }
-        });
+        // const res = await Story.findOneAndUpdate({ userId: id}, {
+        //     $pull: { likes: userId }
+        // }, {
+        //     new: true
+        // });
+
+        const doc = await Story.findOne({ userId: userId });
+        doc.likes.pull(id);
+        const response = await doc.save();
+
+        res.status(200).json(response);
     } catch (err) {
         res.status(500).json({
             error: err.message

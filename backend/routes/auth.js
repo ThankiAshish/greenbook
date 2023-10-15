@@ -36,7 +36,6 @@ authRouter.post('/api/register', upload.single('photo'), async (req, res) => {
         const { name, username, email, password } = req.body;
         const photo = req.file.filename;
         
-
         const existingUser = await User.findOne({ email });
         if(existingUser) {
             return res.status(400).json({
