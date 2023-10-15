@@ -15,7 +15,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _selectedIndex = 0;
+  final int _selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -50,264 +50,277 @@ class _HomePageState extends State<HomePage> {
         actions: [
           GestureDetector(
             onTap: () {
-              Navigator.of(context).push((MaterialPageRoute(builder: (ctx)=> const ProfilePage(),)));
+              Navigator.of(context).push((MaterialPageRoute(
+                builder: (ctx) => const ProfilePage(),
+              )));
             },
             child: CircleAvatar(
               radius: 50,
-              backgroundImage: AssetImage('backend/images/${user.profilePicture}'),
+              backgroundImage:
+                  AssetImage('backend/images/${user.profilePicture}'),
             ),
           )
         ],
       ),
-      body: Column(
-        children: [
-          const SizedBox(
-            height: 20,
+      body: Column(children: [
+        const SizedBox(
+          height: 20,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          child: SearchAnchor.bar(
+            suggestionsBuilder:
+                (BuildContext context, SearchController controller) {
+              return List<Widget>.generate(
+                5,
+                (int index) {
+                  return ListTile(
+                    titleAlignment: ListTileTitleAlignment.center,
+                    title: Text('Initial list item $index'),
+                  );
+                },
+              );
+            },
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0),
-            child: SearchAnchor.bar(
-              suggestionsBuilder: (BuildContext context, SearchController controller) {
-                return List<Widget>.generate(
-                  5,
-                  (int index) {
-                    return ListTile(
-                      titleAlignment: ListTileTitleAlignment.center,
-                      title: Text('Initial list item $index'),
-                    );
-                  },
-                );
-              },
-            ),
-          ),
-          const SizedBox(
-            height: 30,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0),
-            child: Container(
-              // width: 380,
-              height: 140,
-              decoration: ShapeDecoration(
-                color: Colors.green.shade200,
-                // gradient: const LinearGradient(
-                //   colors: [Color(0xff306028), Color(0x0051ff00)],
-                //   stops: [0, 1],
-                //   begin: Alignment.topLeft,
-                //   end: Alignment.bottomRight,
-                // ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
+        ),
+        const SizedBox(
+          height: 30,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          child: Container(
+            // width: 380,
+            height: 140,
+            decoration: ShapeDecoration(
+              color: Colors.green.shade200,
+              // gradient: const LinearGradient(
+              //   colors: [Color(0xff306028), Color(0x0051ff00)],
+              //   stops: [0, 1],
+              //   begin: Alignment.topLeft,
+              //   end: Alignment.bottomRight,
+              // ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
               ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Current Ranking',
-                              style: GoogleFonts.manrope(
-                                color: const Color(0xFF20411B),
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                height: 0,
-                                letterSpacing: 0.70,
-                              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Current Ranking',
+                            style: GoogleFonts.manrope(
+                              color: const Color(0xFF20411B),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              height: 0,
+                              letterSpacing: 0.70,
                             ),
-                            Text(
-                              '#7803',
-                              style: GoogleFonts.manrope(
-                                color: const Color(0xFF233F1E),
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500,
-                                height: 0,
-                              ),
+                          ),
+                          Text(
+                            '#7803',
+                            style: GoogleFonts.manrope(
+                              color: const Color(0xFF233F1E),
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                              height: 0,
                             ),
-                          ],
-                        ),
-                        SizedBox(
-                          // width: 120,
-                          // height: 40,
-                          child: ElevatedButton(
-                            onPressed: (){
-                              Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=> const LeaderboardPage(),),);
-                            },
-                            style: ButtonStyle(
-                              // backgroundColor:
-                              //     MaterialStateProperty.all<Color>(const Color(0xFFF3F3F3)),
-                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50),
-                                ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        // width: 120,
+                        // height: 40,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (ctx) => const LeaderboardPage(),
                               ),
-                            ),
-                            child: Text(
-                              'Leaderboard',
-                              style: GoogleFonts.manrope(
-                                // color: const Color(0xFF000066),
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                height: 0,
+                            );
+                          },
+                          style: ButtonStyle(
+                            // backgroundColor:
+                            //     MaterialStateProperty.all<Color>(const Color(0xFFF3F3F3)),
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(50),
                               ),
                             ),
                           ),
+                          child: Text(
+                            'Leaderboard',
+                            style: GoogleFonts.manrope(
+                              // color: const Color(0xFF000066),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              height: 0,
+                            ),
+                          ),
                         ),
-                      ],
-                    ),
-                    Image.asset(
-                      'assets/images/bannerimage.png',
-                      width: 140,
-                      height: 140,
-                      fit: BoxFit.cover,
-                    ),
-                  ],
-                ),
+                      ),
+                    ],
+                  ),
+                  Image.asset(
+                    'assets/images/bannerimage.png',
+                    width: 140,
+                    height: 140,
+                    fit: BoxFit.cover,
+                  ),
+                ],
               ),
             ),
           ),
-          const SizedBox(
-            height: 30,
-          ),
-          Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Gardeners',
-                      style: GoogleFonts.manrope(
-                        // color: const Color(0xFF000066),
-                        fontSize: 14,
-                        fontWeight: FontWeight.w700,
-                        height: 0,
-                        letterSpacing: 0.70,
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push((MaterialPageRoute(builder: (ctx)=> const GardenersPage(),)));
-                      },
-                      child: Text(
-                        'View All',
-                        style: GoogleFonts.manrope(
-                          // color: const Color(0xFF000066),
-                          fontSize: 8,
-                          fontWeight: FontWeight.w400,
-                          height: 0,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              SizedBox(
-                height: 140,
-                child: ListView(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    for(int i = 0; i < 10; i++)
-                      GestureDetector(
-                        onTap: null,
-                        child: Container(
-                          margin: const EdgeInsets.only(right: 10),
-                          child: const GardenerGridBox(),
-                        ),
-                      ),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              Padding(padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Row(
-                  children: [
-                    Text(
-                      'Popular Story',
-                      style: GoogleFonts.manrope(
+        ),
+        const SizedBox(
+          height: 30,
+        ),
+        Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Gardeners',
+                    style: GoogleFonts.manrope(
                       // color: const Color(0xFF000066),
                       fontSize: 14,
                       fontWeight: FontWeight.w700,
                       height: 0,
                       letterSpacing: 0.70,
-                      ),
-                    ),
-                  ]
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: Container(
-                  decoration: ShapeDecoration(
-                    // gradient: const LinearGradient(
-                    //   colors: [Color(0xff306028), Color(0x0051ff00)],
-                    //   stops: [0, 1],
-                    //   begin: Alignment.topLeft,
-                    //   end: Alignment.bottomRight,
-                    // ),
-                    color: Colors.green.shade200,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
                     ),
                   ),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Row(
-                              children: [
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  'Story Title',
-                                  style: GoogleFonts.manrope(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
-                                    height: 0,
-                                    letterSpacing: 0.50,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                IconButton(onPressed: (){}, icon: const Icon(Icons.favorite)),
-                                IconButton(onPressed: (){}, icon: const Icon(Icons.share)),
-                              ],
-                            ),
-                          ],
-                        ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push((MaterialPageRoute(
+                        builder: (ctx) => const GardenersPage(),
+                      )));
+                    },
+                    child: Text(
+                      'View All',
+                      style: GoogleFonts.manrope(
+                        // color: const Color(0xFF000066),
+                        fontSize: 8,
+                        fontWeight: FontWeight.w400,
+                        height: 0,
                       ),
-                    ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            SizedBox(
+              height: 140,
+              child: ListView(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                scrollDirection: Axis.horizontal,
+                children: [
+                  for (int i = 0; i < 10; i++)
+                    GestureDetector(
+                      onTap: null,
+                      child: Container(
+                        margin: const EdgeInsets.only(right: 10),
+                        child: const GardenerGridBox(),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Row(children: [
+                Text(
+                  'Popular Story',
+                  style: GoogleFonts.manrope(
+                    // color: const Color(0xFF000066),
+                    fontSize: 14,
+                    fontWeight: FontWeight.w700,
+                    height: 0,
+                    letterSpacing: 0.70,
                   ),
                 ),
-              )
-            ],
-          ),
-        ]
-      ),
+              ]),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              child: Container(
+                decoration: ShapeDecoration(
+                  // gradient: const LinearGradient(
+                  //   colors: [Color(0xff306028), Color(0x0051ff00)],
+                  //   stops: [0, 1],
+                  //   begin: Alignment.topLeft,
+                  //   end: Alignment.bottomRight,
+                  // ),
+                  color: Colors.green.shade200,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Row(
+                            children: [
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                'Story Title',
+                                style: GoogleFonts.manrope(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  height: 0,
+                                  letterSpacing: 0.50,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              IconButton(
+                                  onPressed: () {},
+                                  icon: const Icon(Icons.favorite)),
+                              IconButton(
+                                  onPressed: () {},
+                                  icon: const Icon(Icons.share)),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
+      ]),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         currentIndex: _selectedIndex,
@@ -315,38 +328,31 @@ class _HomePageState extends State<HomePage> {
           // setState(() {
           //   _selectedIndex = index;
           // });
-          if(_selectedIndex != 0 && index == 0) {
+          if (_selectedIndex != 0 && index == 0) {
             Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => const HomePage())
-            );
+                MaterialPageRoute(builder: (context) => const HomePage()));
           }
-          if(index == 1) {
+          if (index == 1) {
             Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => const ProfilePage())
-            );
+                MaterialPageRoute(builder: (context) => const ProfilePage()));
           }
-          if(index == 2) {
+          if (index == 2) {
             showModalBottomSheet(
-              context: context, 
-              builder: (BuildContext context) {
-                return SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: 400,
-                  child: Stack(
-                    children: [
+                context: context,
+                builder: (BuildContext context) {
+                  return SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: 400,
+                    child: Stack(children: [
                       Positioned(
-                        right: 20,
-                        top: 20,
-                        child: GestureDetector(
-                          onTap: () => Navigator.pop(context),  
-                          child: const Icon(Icons.close)
-                        )
-                      ),
-                    ]
-                  ),
-                );
-              }
-            );
+                          right: 20,
+                          top: 20,
+                          child: GestureDetector(
+                              onTap: () => Navigator.pop(context),
+                              child: const Icon(Icons.close))),
+                    ]),
+                  );
+                });
           }
         },
         selectedItemColor: Colors.black,
@@ -367,6 +373,4 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
-
 }

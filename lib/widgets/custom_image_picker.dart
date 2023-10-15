@@ -6,6 +6,9 @@ class CustomImagePicker extends StatelessWidget {
   const CustomImagePicker(
     {
       Key? key,
+      required this.height,
+      required this.width,
+      required this.boxShape,
       required this.imagePath,
       required this.onTap
     }
@@ -13,6 +16,10 @@ class CustomImagePicker extends StatelessWidget {
   super(key: key);
 
   final dynamic imagePath;
+  final BoxShape boxShape;
+  final double? width;
+  final double? height;
+
   final void Function() onTap;
 
   @override
@@ -23,8 +30,8 @@ class CustomImagePicker extends StatelessWidget {
         alignment: Alignment.bottomRight,
         children: [
           Container(
-            width: 130,
-            height: 130,
+            width: width,
+            height: height,
             decoration: BoxDecoration(
                 border: Border.all(width: 4, color: Colors.green.shade100),
                 boxShadow: [
@@ -33,7 +40,7 @@ class CustomImagePicker extends StatelessWidget {
                       blurRadius: 2,
                       color: Colors.green.withOpacity(0.1))
                 ],
-                shape: BoxShape.circle,
+                shape: boxShape,
                 image: imagePath == "" ? const DecorationImage(
                     fit: BoxFit.cover,
                     image: NetworkImage(
@@ -51,7 +58,7 @@ class CustomImagePicker extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 color: Colors.green.shade100,
-                shape: BoxShape.circle,
+                shape: boxShape,
               ),
               child: IconButton(
                 icon: Icon(
