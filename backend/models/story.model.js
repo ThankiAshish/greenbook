@@ -22,7 +22,7 @@ const StorySchema = new Schema({
     },
     likes: [
         {
-            type: mongoose.Types.ObjectId,
+            type: String,
             ref: 'User'
         }
     ],
