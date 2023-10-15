@@ -35,12 +35,10 @@ class _CreateStoryState extends State<CreateStory> {
   void createStory() {
     storyService.createStory(
         context: context,
-        id: user,
+        id: user.id,
         title: titleController.text,
         body: bodyController.text,
-        photo: imagePath,
-        likes: 0
-    );
+        photo: imagePath);
   }
 
   @override
@@ -114,6 +112,8 @@ class _CreateStoryState extends State<CreateStory> {
         titleController.text.isEmpty ||
         bodyController.text.isEmpty) {
       showSnackBar(context, 'All Fields are Required!');
+    } else {
+      createStory();
     }
   }
 

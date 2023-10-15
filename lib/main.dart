@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:greenbook/providers/story_provider.dart';
 import 'package:greenbook/providers/user_provider.dart';
 import 'package:greenbook/screens/create_story_page.dart';
 import 'package:greenbook/screens/home_page.dart';
@@ -11,6 +12,7 @@ import 'package:provider/provider.dart';
 void main() {
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (_) => UserProvider()),
+    ChangeNotifierProvider(create: (_) => StoryProvider()),
   ], child: const MainApp()));
 }
 
@@ -38,10 +40,10 @@ class _MainAppState extends State<MainApp> {
           colorSchemeSeed: Colors.green,
         ),
         debugShowCheckedModeBanner: false,
-        // home: Provider.of<UserProvider>(context).user.token.isNotEmpty
-        //     ? const HomePage()
-        //     : const WelcomePage()
-        home: const CreateStory(),
+        home: Provider.of<UserProvider>(context).user.token.isNotEmpty
+            ? const HomePage()
+            : const WelcomePage()
+        // home: const CreateStory(),
         );
   }
 }

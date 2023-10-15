@@ -27,7 +27,6 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
           colors: [Colors.white, Color(0x66D3FF76)],
         ),
       ),
-
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
@@ -45,7 +44,6 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
           ),
           centerTitle: true,
         ),
-
         body: Padding(
           padding: const EdgeInsets.all(40),
           child: Center(
@@ -65,7 +63,7 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                 SizedBox(
                   height: 35,
                 ),
-                Container(
+                SizedBox(
                   width: 600, // Adjust the width as per your preference
                   child: TextField(
                     decoration: InputDecoration(
@@ -86,7 +84,7 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                 SizedBox(
                   height: 20,
                 ),
-                Container(
+                SizedBox(
                   width: 600, // Adjust the width as per your preference
                   child: TextField(
                     decoration: InputDecoration(
@@ -129,7 +127,6 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                     style: TextStyle(
                       color: Color(0xFF660000),
                       fontSize: 16,
-                      
                       fontFamily: 'Manrope',
                       fontWeight: FontWeight.w400,
                       height: 0,
@@ -206,7 +203,6 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
             ),
           ),
         ),
-
         bottomNavigationBar: BottomNavigationBar(
           backgroundColor: Colors.transparent,
           elevation: 0,

@@ -22,21 +22,17 @@ class AuthService {
     required dynamic profilePicture
   }) async {
     try {
-      final uri = Uri.parse('${Constants.uri}/api/register');
+      final uri = Uri.parse('${Constants.ashishPCUri}/api/register');
       final request = http.MultipartRequest('POST', uri);
       request.fields['name'] = name;
       request.fields['username'] = username;
       request.fields['email'] = email;
       request.fields['password'] = password;
 
-      print(profilePicture);
-
       final imageFile = File(profilePicture);
-      final bytes = imageFile.readAsBytesSync();
       String extension = imageFile.path.split('.').last;
       final multipartFile = await http.MultipartFile.fromPath('photo', imageFile.path, contentType: MediaType('image', extension));
 
-      print(multipartFile.filename);
       request.files.add(multipartFile);
 
       request.headers.addAll({
@@ -47,8 +43,8 @@ class AuthService {
       final response = await request.send();
 
       if (response.statusCode == 200) {
-        final responseBody = await response.stream.bytesToString();
-        final userData = json.decode(responseBody);
+        // final responseBody = await response.stream.bytesToString();
+        // final userData = json.decode(responseBody);
 
         // ignore: use_build_context_synchronously
         showSnackBar(
@@ -80,7 +76,7 @@ class AuthService {
       var userProvider = Provider.of<UserProvider>(context, listen: false);
       final navigator = Navigator.of(context);
       http.Response res = await http.post(
-        Uri.parse('${Constants.uri}/api/login'),
+        Uri.parse('${Constants.ashishPCUri}/api/login'),
         body: jsonEncode({
           'email': email,
           'password': password
@@ -124,7 +120,7 @@ class AuthService {
     }
 
     var tokenResponse = await http.post(
-      Uri.parse('${Constants.uri}/tokenValidation'),
+      Uri.parse('${Constants.ashishPCUri}/tokenValidation'),
       headers: <String, String> {
         'Content-Type': 'application/json; charset=UTF-8',
         'x-auth-token': token!,
