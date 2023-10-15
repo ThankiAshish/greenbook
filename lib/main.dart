@@ -41,7 +41,7 @@ class _MainAppState extends State<MainApp> {
         colorSchemeSeed: Colors.green,
       ),
       debugShowCheckedModeBanner: false,
-      home: Provider.of<UserProvider>(context).user.token.isEmpty ? const LoginPage() : const HomePage()
+      home: Provider.of<UserProvider>(context).user.token.isNotEmpty ? const HomePage() : const WelcomePage()
       // home: const BottomNavBar(),
     );
   }

@@ -315,7 +315,7 @@ class _HomePageState extends State<HomePage> {
           // setState(() {
           //   _selectedIndex = index;
           // });
-          if(index == 0) {
+          if(_selectedIndex != 0 && index == 0) {
             Navigator.of(context).push(
               MaterialPageRoute(builder: (context) => const HomePage())
             );
@@ -335,14 +335,15 @@ class _HomePageState extends State<HomePage> {
                   child: Stack(
                     children: [
                       Positioned(
-                      right: 20,
-                      top: 20,
-                      child: GestureDetector(
-                        onTap: () => Navigator.pop(context),  
-                        child: const Icon(Icons.close)
-                      )
+                        right: 20,
+                        top: 20,
+                        child: GestureDetector(
+                          onTap: () => Navigator.pop(context),  
+                          child: const Icon(Icons.close)
+                        )
                       ),
-                  ]),
+                    ]
+                  ),
                 );
               }
             );

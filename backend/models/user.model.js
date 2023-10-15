@@ -36,6 +36,10 @@ const UserSchema = new Schema({
         type: String,
         trim: true,
     },
+    points: {
+        type: Number,
+        default: 0
+    }
 });
 
 const UserModel = db.model("user", UserSchema);
