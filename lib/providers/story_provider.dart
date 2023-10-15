@@ -12,7 +12,7 @@ class StoryProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setUserFromModel(Story storyModel) {
+  void setStoryFromModel(Story storyModel) {
     _story = storyModel;
     notifyListeners();
   }

@@ -54,10 +54,16 @@ class _HomePageState extends State<HomePage> {
                 builder: (ctx) => const ProfilePage(),
               )));
             },
-            child: CircleAvatar(
-              radius: 50,
-              backgroundImage:
-                  AssetImage('backend/images/${user.profilePicture}'),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12.0),
+              child: ClipOval(
+                child: Image.asset(
+                  "backend/images/${user.profilePicture}",
+                  width: 50,
+                  height: 50,
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
           )
         ],
