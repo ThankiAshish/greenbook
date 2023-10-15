@@ -20,11 +20,15 @@ const StorySchema = new Schema({
         trim: true,
         required: true
     },
-    likes: {
-        type: Number,
-    },
+    likes: [
+        {
+            type: mongoose.Types.ObjectId,
+            ref: 'User'
+        }
+    ],
     userId: {
         type: String,
+        unique: true,
         required: true
     }
 });
