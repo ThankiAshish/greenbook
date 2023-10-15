@@ -1,9 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:greenbook/services/auth_services.dart';
 import 'package:greenbook/services/story_services.dart';
 import 'package:greenbook/widgets/custom_image_picker.dart';
 import 'package:greenbook/widgets/custom_primary_filled_button.dart';
