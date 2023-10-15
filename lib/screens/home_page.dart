@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:greenbook/providers/user_provider.dart';
-import 'package:greenbook/screens/create_story_page.dart';
 import 'package:greenbook/screens/gardeners_page.dart';
 import 'package:greenbook/screens/leaderboard_page.dart';
 import 'package:greenbook/screens/profile_page.dart';
