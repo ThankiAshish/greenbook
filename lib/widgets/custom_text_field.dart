@@ -12,6 +12,7 @@ class CustomTextField extends StatelessWidget {
       this.obsecuringCharacter,
       this.fillColor,
       this.hintColor,
+      this.maxLines
     }
   )
   : super(key: key);
@@ -24,6 +25,7 @@ class CustomTextField extends StatelessWidget {
   final String? hintText;
   final Color? hintColor;
   final Color? fillColor;
+  final int? maxLines;
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +34,7 @@ class CustomTextField extends StatelessWidget {
       child: TextField(
         controller: controller,
         keyboardType: keyboardType,
+        maxLines: maxLines ?? 1,
         obscureText: obsecureText ?? false,
         obscuringCharacter: obsecuringCharacter ?? '*',
         decoration: InputDecoration(
