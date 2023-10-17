@@ -1,20 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:greenbook/providers/story_provider.dart';
 import 'package:greenbook/providers/user_provider.dart';
 import 'package:greenbook/screens/home_page.dart';
-import 'package:greenbook/screens/login_page.dart';
 import 'package:greenbook/screens/welcome_page.dart';
 import 'package:greenbook/services/auth_services.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => UserProvider()),
-      ],
-      child: const MainApp()
-    )
-  );
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (_) => UserProvider()),
+    ChangeNotifierProvider(create: (_) => StoryProvider()),
+  ], child: const MainApp()));
 }
 
 class MainApp extends StatefulWidget {
@@ -36,13 +32,15 @@ class _MainAppState extends State<MainApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        useMaterial3: true,
-        colorSchemeSeed: Colors.green,
-      ),
-      debugShowCheckedModeBanner: false,
-      home: Provider.of<UserProvider>(context).user.token.isNotEmpty ? const HomePage() : const WelcomePage()
-      // home: const BottomNavBar(),
-    );
+        theme: ThemeData(
+          useMaterial3: true,
+          colorSchemeSeed: Colors.green,
+        ),
+        debugShowCheckedModeBanner: false,
+        home: Provider.of<UserProvider>(context).user.token.isNotEmpty
+            ? const HomePage()
+            : const WelcomePage()
+        // home: const CreateStory(),
+        );
   }
 }

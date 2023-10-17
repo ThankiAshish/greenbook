@@ -23,7 +23,7 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
-  
+
   var picker = ImagePicker();
   late dynamic pickedFile;
   late dynamic imagePath;
@@ -32,13 +32,12 @@ class _RegisterPageState extends State<RegisterPage> {
 
   void registerUser() {
     authService.registerUser(
-      context: context, 
-      name: nameController.text, 
-      email: emailController.text, 
-      username: usernameController.text, 
-      password: passwordController.text,
-      profilePicture: imagePath
-    );
+        context: context,
+        name: nameController.text,
+        email: emailController.text,
+        username: usernameController.text,
+        password: passwordController.text,
+        profilePicture: imagePath);
   }
 
   @override
@@ -69,39 +68,39 @@ class _RegisterPageState extends State<RegisterPage> {
               height: 10,
             ),
             CustomImagePicker(
-              imagePath: imagePath, 
+              width: 130,
+              height: 130,
+              boxShape: BoxShape.circle,
+              imagePath: imagePath,
               onTap: imagePickerOnClick,
             ),
             const SizedBox(
               height: 30,
             ),
             CustomTextField(
-              controller: usernameController, 
-              labelText: 'Username', 
-              keyboardType: TextInputType.text
-            ),
+                controller: usernameController,
+                labelText: 'Username',
+                keyboardType: TextInputType.text),
             const SizedBox(
               height: 15,
             ),
             CustomTextField(
-              controller: nameController, 
-              labelText: 'Name', 
-              keyboardType: TextInputType.text
-            ),
+                controller: nameController,
+                labelText: 'Name',
+                keyboardType: TextInputType.text),
             const SizedBox(
               height: 15,
             ),
             CustomTextField(
-              controller: emailController, 
-              labelText: 'Email', 
-              keyboardType: TextInputType.emailAddress
-            ),
+                controller: emailController,
+                labelText: 'Email',
+                keyboardType: TextInputType.emailAddress),
             const SizedBox(
               height: 15,
             ),
             CustomTextField(
-              controller: passwordController, 
-              labelText: 'Password', 
+              controller: passwordController,
+              labelText: 'Password',
               keyboardType: TextInputType.text,
               obsecureText: true,
             ),
@@ -109,8 +108,8 @@ class _RegisterPageState extends State<RegisterPage> {
               height: 15,
             ),
             CustomTextField(
-              controller: confirmPasswordController, 
-              labelText: 'Confirm Password', 
+              controller: confirmPasswordController,
+              labelText: 'Confirm Password',
               keyboardType: TextInputType.text,
               obsecureText: true,
             ),
@@ -118,14 +117,13 @@ class _RegisterPageState extends State<RegisterPage> {
               height: 40,
             ),
             CustomPrimaryFilledButton(
-              text: 'Create Account', 
-              color: const Color(0xFF000066), 
-              width: 325, 
-              height: 60, 
-              textColor: const Color(0xFFF3F3F3), 
-              textSize: 18, 
-              onPressed: registerButtonOnClick
-            ),
+                text: 'Create Account',
+                color: const Color(0xFF000066),
+                width: 325,
+                height: 60,
+                textColor: const Color(0xFFF3F3F3),
+                textSize: 18,
+                onPressed: registerButtonOnClick),
             const SizedBox(
               height: 20,
             ),
@@ -141,7 +139,7 @@ class _RegisterPageState extends State<RegisterPage> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          'Already Have an Account? ', 
+          'Already Have an Account? ',
           style: GoogleFonts.manrope(
             fontSize: 14,
             fontWeight: FontWeight.w400,
@@ -151,10 +149,14 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
         GestureDetector(
           onTap: () {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (ctx)=> const LoginPage(),),);
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                builder: (ctx) => const LoginPage(),
+              ),
+            );
           },
           child: Text(
-            'Login', 
+            'Login',
             style: GoogleFonts.manrope(
               color: Colors.green.shade900,
               fontSize: 14,
@@ -168,33 +170,25 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  void registerButtonOnClick (){
-    if(
-      imagePath == null || 
-      usernameController.text.isEmpty || 
-      nameController.text.isEmpty || 
-      emailController.text.isEmpty || 
-      passwordController.text.isEmpty
-    ) {
-      showSnackBar(
-        context, 
-        'All Fields are Required!'
-      );
+  void registerButtonOnClick() {
+    if (imagePath == null ||
+        usernameController.text.isEmpty ||
+        nameController.text.isEmpty ||
+        emailController.text.isEmpty ||
+        passwordController.text.isEmpty) {
+      showSnackBar(context, 'All Fields are Required!');
     } else {
-      if(passwordController.text == confirmPasswordController.text) {
+      if (passwordController.text == confirmPasswordController.text) {
         registerUser();
       } else {
-        showSnackBar(
-          context, 
-          'Passwords do not match'
-        );
+        showSnackBar(context, 'Passwords do not match');
       }
     }
   }
 
-  void imagePickerOnClick () async {
+  void imagePickerOnClick() async {
     pickedFile = await picker.pickImage(source: ImageSource.gallery);
-    if(pickedFile != null) {
+    if (pickedFile != null) {
       File imageFile = File(pickedFile.path);
       imagePath = imageFile.path;
       setState(() {});
