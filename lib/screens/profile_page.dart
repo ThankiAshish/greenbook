@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:greenbook/providers/story_provider.dart';
 import 'package:greenbook/providers/user_provider.dart';
 import 'package:greenbook/services/story_services.dart';
+import 'package:greenbook/widgets/custom_primary_filled_button.dart';
 import 'package:provider/provider.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -103,7 +104,7 @@ class _ProfilePageState extends State<ProfilePage> {
               margin: const EdgeInsets.all(10),
               decoration: const BoxDecoration(color: Color(0x541E1E1E)),
             ),
-            Column(
+            story.id != '' ? Column(
               children: [
                 Padding(
                   padding: const EdgeInsets.fromLTRB(30, 5, 30, 5),
@@ -196,6 +197,32 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
               ],
+            ) : 
+            SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              child: 
+                Column(
+                  children: [
+                    const Column(
+                      children: [
+                        Text('no story found')
+                      ],
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: Center(
+                        child: CustomPrimaryFilledButton(
+                          text: 'Create Story', 
+                          width: 325, 
+                          height: 60, 
+                          textSize: 18, 
+                          onPressed: () {}
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
             ),
           ],
         ),

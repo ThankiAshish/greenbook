@@ -22,7 +22,7 @@ class AuthService {
     required dynamic profilePicture
   }) async {
     try {
-      final uri = Uri.parse('${Constants.ashishPCUri}/api/register');
+      final uri = Uri.parse('${Constants.uri}/api/register');
       final request = http.MultipartRequest('POST', uri);
       request.fields['name'] = name;
       request.fields['username'] = username;
@@ -76,7 +76,7 @@ class AuthService {
       var userProvider = Provider.of<UserProvider>(context, listen: false);
       final navigator = Navigator.of(context);
       http.Response res = await http.post(
-        Uri.parse('${Constants.ashishPCUri}/api/login'),
+        Uri.parse('${Constants.uri}/api/login'),
         body: jsonEncode({
           'email': email,
           'password': password
@@ -120,7 +120,7 @@ class AuthService {
     }
 
     var tokenResponse = await http.post(
-      Uri.parse('${Constants.ashishPCUri}/tokenValidation'),
+      Uri.parse('${Constants.uri}/tokenValidation'),
       headers: <String, String> {
         'Content-Type': 'application/json; charset=UTF-8',
         'x-auth-token': token!,
