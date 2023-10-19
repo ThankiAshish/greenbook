@@ -37,6 +37,8 @@ class _CreateStoryState extends State<CreateStory> {
         title: titleController.text,
         body: bodyController.text,
         photo: imagePath);
+
+    setState(() {});
   }
 
   @override
