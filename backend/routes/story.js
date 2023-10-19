@@ -58,6 +58,29 @@ storyRouter.post('/api/story/store', upload.single('photo'), async (req, res) =>
     }
 });
 
+storyRouter.put('/api/story/edit', upload.single('photo'), async (req, res) => {
+    console.log(req.body);
+    console.log(req.file);
+    
+    try {
+        const { title, body, userId } = req.body;
+        const photo = req.file.filename;
+        
+        const updatedResult = await Story.findOneAndUpdate({ userId }, {
+            title,
+            body,
+            bannerPicture: photo
+        });
+        
+        res.status(200).json(updatedResult);
+    } catch(err) {
+        console.log(err.message);
+        res.status(500).json({
+            error: err.message
+        });
+    }
+});
+
 storyRouter.put('/api/story/like', async (req, res) => {
     try {
         const { id, userId } = req.body;

@@ -3,6 +3,22 @@ const userRouter = express.Router();
 const User = require('../models/user.model');
 const mongoose = require('mongoose');
 
+userRouter.post('/api/user/search', async (req, res) => {
+    try {
+        const pattern = new RegExp("^" + req.body.searchQuery);
+    
+        const result = 
+            await User.find({name: {$regex: pattern}})
+            .select("_id name email username profilePicture");
+            
+        res.status(200).json(result);
+    } catch (err) {
+        res.status(500).json({
+            error: err.message
+        });
+    }
+});
+
 userRouter.put('/api/user/follow', async (req, res) => {
     try {
         const { loggedInUserId, toFollowId } = req.body;
