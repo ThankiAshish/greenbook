@@ -16,7 +16,7 @@ class StoryService {
       required String body,
       required dynamic photo}) async {
     try {
-      final uri = Uri.parse('${Constants.uri}/api/story/store');
+      final uri = Uri.parse('${Constants.ashishPCUri}/api/story/store');
       final request = http.MultipartRequest('POST', uri);
       request.fields['userId'] = id;
       request.fields['title'] = title;
@@ -53,7 +53,7 @@ class StoryService {
 
   void getStory({required BuildContext context, required dynamic id}) async {
     try {
-      final uri = Uri.parse('${Constants.uri}/api/story/fetch?id=$id');
+      final uri = Uri.parse('${Constants.ashishPCUri}/api/story/fetch?id=$id');
       var storyProvider = Provider.of<StoryProvider>(context, listen: false);
       final response = await http.get(
         uri,
