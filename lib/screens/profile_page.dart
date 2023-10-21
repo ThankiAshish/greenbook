@@ -104,23 +104,23 @@ class _ProfilePageState extends State<ProfilePage> {
             margin: const EdgeInsets.all(10),
             decoration: const BoxDecoration(color: Color(0x541E1E1E)),
           ),
-            const Divider(
-              height: 30,
-              indent: 20,
-              endIndent: 20,
-              thickness: 2,
-            ),
-            story.id != '' ? Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 5),
-                  child: Container(
-                    height: 200,
-                    decoration: ShapeDecoration(
-                      image: DecorationImage(
-                        image:
-                            AssetImage("backend/images/${story.bannerPicture}"),
-                        fit: BoxFit.cover,
+          story.id != ''
+              ? Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(30, 5, 30, 5),
+                      child: Container(
+                        height: 200,
+                        decoration: ShapeDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(
+                                "backend/images/${story.bannerPicture}"),
+                            fit: BoxFit.cover,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
                       ),
                     ),
                     // About
