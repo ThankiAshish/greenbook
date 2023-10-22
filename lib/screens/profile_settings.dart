@@ -1,7 +1,13 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:greenbook/widgets/custom_floating_action_button.dart';
+import 'package:greenbook/widgets/custom_image_picker.dart';
+import 'package:greenbook/widgets/custom_primary_filled_button.dart';
+import 'package:greenbook/widgets/custom_text_field.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ProfileSettings extends StatefulWidget {
   const ProfileSettings({super.key});
@@ -11,8 +17,18 @@ class ProfileSettings extends StatefulWidget {
 }
 
 class _ProfileSettingsState extends State<ProfileSettings> {
-  bool showInvalidAmountMessage = false;
-  int currIndex = 0;
+ 
+  late dynamic pickedFile;
+  late dynamic imagePath;
+  var picker = ImagePicker();
+
+  TextEditingController nameController = TextEditingController();
+
+  @override
+  void initState() {
+    imagePath = "";
+    super.initState();
+  }
 
 
   @override
@@ -49,145 +65,83 @@ class _ProfileSettingsState extends State<ProfileSettings> {
 
 
         
-        body: Padding(
-          padding: const EdgeInsets.all(45),
-          child: Center(
-            child: Column(
-              children: [
-                Text(
-                  'Change Details',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 20,
-                    fontFamily: 'Manrope',
-                    fontWeight: FontWeight.w400,
-                    height: 0,
-                    letterSpacing: 2.30,
-                  ),
-                ),
-                SizedBox(
-                  height: 25,
-                ),
-                Stack(
-                  alignment: Alignment.bottomRight,
-                  children: [
-                    Container(
-                      width: 130,
-                      height: 130,
-                      decoration: BoxDecoration(
-                          border: Border.all(width: 4, color: Colors.white),
-                          boxShadow: [
-                            BoxShadow(
-                                spreadRadius: 2,
-                                blurRadius: 10,
-                                color: Colors.black.withOpacity(0.1))
-                          ],
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(
-                                  'https://cdn.pixabay.com/photo/2018/11/13/21/43/avatar-3814049_640.png'))),
-                    ),
-                    Positioned(
-                      right: 0,
-                      bottom: 0,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          shape: BoxShape.circle,
-                        ),
-                        child: IconButton(
-                          icon: Icon(
-                            Icons.add,
-                            color: Colors.black,
-                          ),
-                          onPressed: null,
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: 30,
-                ),
-                TextField(
-                    decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white.withOpacity(0.8),
-                  hintText: 'Your name',
-                  hintStyle: GoogleFonts.manrope(
-                    textStyle: TextStyle(color: Colors.black),
-                  ),
-                  contentPadding: EdgeInsets.all(20),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide.none,
-                  ),
-                )),
-                SizedBox(
-                  height: 20,
-                ),
-                Expanded(
-                  child: Align(
-                    alignment: Alignment.bottomCenter,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // Add your button click action here
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            Color(0xFF000066), // Button background color
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 130, vertical: 17), // Button padding
-                      ),
-                      child: Text(
-                        'Save',
-                        style: GoogleFonts.manrope(
-                          textStyle: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            letterSpacing: 2.25,
-                          ), // Text color // Text font size
-                        ),
-                      ),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(45),
+            child: Center(
+              child: Column(
+                children: [
+                  Text(
+                    'Change Details',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                      fontFamily: 'Manrope',
+                      fontWeight: FontWeight.w400,
+                      height: 0,
+                      letterSpacing: 2.30,
                     ),
                   ),
-                ),
-              ],
+                  SizedBox(
+                    height: 25,
+                  ),
+                  
+                  CustomImagePicker(
+                    width: 130,
+                    height: 130,
+                    boxShape: BoxShape.circle,
+                    imagePath: imagePath, 
+                    onTap: imagePickerOnClick,
+                  ),
+        
+                  SizedBox(
+                    height: 30,
+                  ),
+
+                  CustomTextField(
+                  controller: nameController, 
+                  keyboardType: TextInputType.text, 
+                  labelText: "Your name"),
+             
+                  SizedBox(
+                    height: 40,
+                  ),
+        
+                  CustomPrimaryFilledButton(
+                  text: "Save", 
+                  width: 280, 
+                  height: 50, 
+                  textSize: 18, 
+                  onPressed: (){
+                    
+                  })
+            
+                ],
+              ),
             ),
           ),
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          currentIndex: currIndex,
-          onTap: (int index) {
-            setState(() {
-              currIndex = index;
-            });
-          },
-          selectedItemColor: Colors.blue,
-          unselectedItemColor: Colors.black,
-          iconSize: 35.0,
-          items: [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.add_circle),
-              label: 'Add',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.menu),
-              label: 'Menu',
-            ),
-          ],
-        ),
+
+
+
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(bottom:20,right: 20),
+        child: CustomFloatingActionButton()
       ),
-    );
+    ),
+    );   
   }
+
+ void imagePickerOnClick () async {
+    pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    if(pickedFile != null) {
+      File imageFile = File(pickedFile.path);
+      imagePath = imageFile.path;
+      setState(() {});
+    }
+  }
+  
 }
+
+

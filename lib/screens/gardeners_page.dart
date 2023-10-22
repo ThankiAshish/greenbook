@@ -105,6 +105,7 @@ class _GardernersPageState extends State<GardenersPage> {
                           childAspectRatio: 1 / 1.1,
                         ), 
                         itemBuilder: (context, index) {
+
                            return GestureDetector(
                             onTap: () {
                               Navigator.of(context).push(
@@ -157,8 +158,8 @@ class _GardernersPageState extends State<GardenersPage> {
                                   // ),
                                 ],
                               ),
-                                                     ),
-                           );
+                            ),
+                          );
                         }
                       )
                     ],

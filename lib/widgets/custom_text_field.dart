@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CustomTextField extends StatelessWidget {
   const CustomTextField(
@@ -12,7 +13,9 @@ class CustomTextField extends StatelessWidget {
       this.obsecuringCharacter,
       this.fillColor,
       this.hintColor,
-      this.maxLines
+      this.maxLines,
+      List<TextInputFormatter>? inputFormatters, 
+      onChanged,
     }
   )
   : super(key: key);

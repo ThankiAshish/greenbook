@@ -149,4 +149,29 @@ storyRouter.post('/api/story/fetch/latest', async (req, res) => {
     }
 });
 
+storyRouter.delete('/api/story/delete/:id', async (req, res) => {
+    try {
+        const id = req.params.id;
+
+        const deletedStory = Story.findByIdAndRemove(id);
+
+        if(!deletedStory) {
+            if (!deletedStory) {
+                return res.status(404).json({ 
+                    error: 'Story not found' 
+                });
+            }
+        }
+
+        return res.status(200).json({ 
+            message: 'Story deleted successfully',
+            deleted: true
+        });
+    } catch(err) {
+        res.status(500).json({
+            error: err.message
+        });
+    }
+});
+
 module.exports = storyRouter;
