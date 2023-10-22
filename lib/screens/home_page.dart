@@ -20,6 +20,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  bool hasLikedLatestStory = false;
+
   List<UsersList> usersList = [];
 
   LatestStory story = LatestStory(
@@ -47,7 +49,24 @@ class _HomePageState extends State<HomePage> {
   void fetchLatestStory() async {
     final user = Provider.of<UserProvider>(context, listen: false).user;
     story = await StoryService.fetchLatestStory(user.id);
+    hasLikedLatestStory = story.likes.contains(user.id);
     setState(() {});
+  }
+
+  void likeUserStory() async {
+    setState(() {
+      hasLikedLatestStory = true;
+    });
+    final user = Provider.of<UserProvider>(context, listen: false).user;
+    await StoryService.likeStory(user.id, story.userId);
+  }
+
+  void unlikeUserStory() async {
+    setState(() {
+      hasLikedLatestStory = false;
+    });
+    final user = Provider.of<UserProvider>(context, listen: false).user;
+    await StoryService.unlikeStory(user.id, story.userId);
   }
 
   @override
@@ -263,7 +282,7 @@ class _HomePageState extends State<HomePage> {
                     GestureDetector(
                       onTap: () {
                         Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => GardenersProfilePage(userId: usersList[i].id)));
+                          MaterialPageRoute(builder: (context) => GardenersProfilePage(loggedInUserId:  user.id, userId: usersList[i].id)));
                       },
                       child: Container(
                         width: 120,
@@ -327,7 +346,7 @@ class _HomePageState extends State<HomePage> {
             GestureDetector(
               onTap: () {
                 Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => GardenersProfilePage(userId: story.userId)));
+                  MaterialPageRoute(builder: (context) => GardenersProfilePage(loggedInUserId:  user.id, userId: story.userId)));
               },
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -365,9 +384,19 @@ class _HomePageState extends State<HomePage> {
                             ),
                             Row(
                               children: [
-                                IconButton(
-                                    onPressed: () {},
-                                    icon: const Icon(Icons.favorite)),
+                                hasLikedLatestStory ?
+                                    IconButton(
+                                      onPressed: () {
+                                        unlikeUserStory();
+                                      },
+                                      icon: const Icon(Icons.favorite, color: Colors.red),
+                                    ) :
+                                    IconButton(
+                                      onPressed: () {
+                                        likeUserStory();
+                                      },
+                                      icon: const Icon(Icons.favorite, color: Colors.black),
+                                    ),
                                 IconButton(
                                     onPressed: () {},
                                     icon: const Icon(Icons.share)),

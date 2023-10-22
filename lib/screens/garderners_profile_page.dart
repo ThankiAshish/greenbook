@@ -9,13 +9,18 @@ import 'package:greenbook/services/user_services.dart';
 import 'package:greenbook/widgets/custom_floating_action_button.dart';
 import 'package:provider/provider.dart';
 
+import '../widgets/custom_primary_filled_button.dart';
+import '../widgets/custom_primary_outlined_button.dart';
+
 class GardenersProfilePage extends StatefulWidget {
   // const GardenersProfilePage({super.key});
-  
+
+  final String loggedInUserId;
   final String userId;
   final Key? key;
 
   const GardenersProfilePage({
+    required this.loggedInUserId,
     required this.userId,
     this.key,
   }) : super(key: key);
@@ -25,8 +30,8 @@ class GardenersProfilePage extends StatefulWidget {
 }
 
 class _GardenersProfilePageState extends State<GardenersProfilePage> {
-
   bool isEnabled = false;
+  bool isFollowingGardener = false;
 
   GardenerProfile gardenerDetails= GardenerProfile(
     id: '', 
@@ -49,6 +54,7 @@ class _GardenersProfilePageState extends State<GardenersProfilePage> {
 
   void fetchUserDetails() async {
     gardenerDetails = await UserServices.fetchGardenerById(widget.userId);
+    isFollowingGardener = gardenerDetails.followers.contains(widget.loggedInUserId);
     setState(() {});
   }
 
@@ -58,6 +64,20 @@ class _GardenersProfilePageState extends State<GardenersProfilePage> {
       id: widget.userId,
     );
     setState(() {});
+  }
+
+  void followUser() async {
+    setState(() {
+      isFollowingGardener = true;
+    });
+    await UserServices.followUser(widget.loggedInUserId, widget.userId);
+  }
+
+  void unfollowUser() async {
+    setState(() {
+      isFollowingGardener = false;
+    });
+    await UserServices.unfollowUser(widget.loggedInUserId, widget.userId);
   }
 
   @override
@@ -129,12 +149,23 @@ class _GardenersProfilePageState extends State<GardenersProfilePage> {
                       ),
                     ],
                   ),
-                  // Container(
-                  //   width: 350,
-                  //   height: 1,
-                  //   margin: const EdgeInsets.all(10),
-                  //   decoration: const BoxDecoration(color: Color(0x541E1E1E)),
-                  // ),
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: isFollowingGardener ? Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        CustomPrimaryFilledButton(text: "Unfollow", width: 150, height: 40, textSize: 20, onPressed: () {unfollowUser();}),
+                        CustomPrimaryOutlinedButton(text: "Donate", width: 150, height: 40, textSize: 20, onPressed: () {})
+                      ],
+                    ) :
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        CustomPrimaryFilledButton(text: "Follow", width: 150, height: 40, textSize: 20, onPressed: () {followUser();}),
+                        CustomPrimaryOutlinedButton(text: "Donate", width: 150, height: 40, textSize: 20, onPressed: () {})
+                      ],
+                    ),
+                  ),
                   const Divider(
                     height: 15,
                     thickness: 1,
