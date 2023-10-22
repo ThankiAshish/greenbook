@@ -18,29 +18,6 @@ class UsersList {
     required this.profilePicture
   });
 
-  // Map<String, dynamic> toMap() {
-  //   return {
-  //     'name': name,
-  //     'email': email,
-  //     'username': username,
-  //     'profilePicture': profilePicture,
-  //   };
-  // }
-
-  // factory UsersList.fromMap(Map<String, dynamic> map) {
-  //   return UsersList(
-  //     id: map['_id'] ?? '',
-  //     name: map['name'] ?? '',
-  //     email: map['email'] ?? '',
-  //     username: map['username'] ?? '',
-  //     profilePicture: map['profilePicture'] ?? '',
-  //   );
-  // }
-
-  // String toJson() =>  json.encode(toMap());
-
-  // factory UsersList.fromJson(String source) => UsersList.fromMap(json.decode(source));
-
   factory UsersList.fromJson(Map<String, dynamic> json) => UsersList(
       id: json["_id"] ?? '',
       name: json["name"] ?? '',

@@ -3,6 +3,27 @@ const userRouter = express.Router();
 const User = require('../models/user.model');
 const mongoose = require('mongoose');
 
+userRouter.get('/api/user/fetch/:id', async (req, res) => {
+    try {
+      const userId = req.params.id;
+  
+      const user = await User.findOne({ _id: userId })
+        .select("_id name email username profilePicture followers following");
+  
+      if (user) {
+        return res.status(200).json(user);
+      } else {
+        return res.status(404).json({
+          error: "User not found"
+        });
+      }
+    } catch (err) {
+      res.status(500).json({
+        error: err.message
+      });
+    }
+});
+
 userRouter.post('/api/user/fetch/all', async (req, res) => {
     try {
         const { email } = req.body;

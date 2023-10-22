@@ -16,4 +16,9 @@ class StoryProvider extends ChangeNotifier {
     _story = storyModel;
     notifyListeners();
   }
+
+  void clearStory() {
+    _story =
+      Story(id: '', title: '', body: '', bannerPicture: '', likes: []);
+  }
 }

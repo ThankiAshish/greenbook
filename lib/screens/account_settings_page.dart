@@ -35,7 +35,7 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
           title: Text(
             "Account settings",
             style: GoogleFonts.manrope(
-              textStyle: TextStyle(color: Colors.black),
+              textStyle: GoogleFonts.manrope(color: Colors.black),
             ),
           ),
           leading: IconButton(
@@ -51,10 +51,9 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
               children: [
                 Text(
                   'Change Details',
-                  style: TextStyle(
+                  style: GoogleFonts.manrope(
                     color: Colors.black,
                     fontSize: 20,
-                    fontFamily: 'Manrope',
                     fontWeight: FontWeight.w400,
                     height: 0,
                     letterSpacing: 2.30,
@@ -71,7 +70,7 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                       fillColor: Colors.white.withOpacity(0.8),
                       hintText: 'Username',
                       hintStyle: GoogleFonts.manrope(
-                        textStyle: TextStyle(color: Colors.black),
+                        textStyle: GoogleFonts.manrope(color: Colors.black),
                       ),
                       contentPadding: EdgeInsets.all(20),
                       border: OutlineInputBorder(
@@ -92,7 +91,7 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                       fillColor: Colors.white.withOpacity(0.8),
                       hintText: 'Email',
                       hintStyle: GoogleFonts.manrope(
-                        textStyle: TextStyle(color: Colors.black),
+                        textStyle: GoogleFonts.manrope(color: Colors.black),
                       ),
                       contentPadding: EdgeInsets.all(20),
                       border: OutlineInputBorder(
@@ -124,10 +123,9 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                   alignment: Alignment.centerLeft,
                   child: Text(
                     'Change Password',
-                    style: TextStyle(
+                    style: GoogleFonts.manrope(
                       color: Color(0xFF660000),
                       fontSize: 16,
-                      fontFamily: 'Manrope',
                       fontWeight: FontWeight.w400,
                       height: 0,
                       letterSpacing: 0.80,
@@ -141,10 +139,9 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                   alignment: Alignment.centerLeft,
                   child: Text(
                     'Deactivate Account',
-                    style: TextStyle(
+                    style: GoogleFonts.manrope(
                       color: Color(0xFF660000),
                       fontSize: 16,
-                      fontFamily: 'Manrope',
                       fontWeight: FontWeight.w400,
                       height: 0,
                       letterSpacing: 0.80,
@@ -158,10 +155,9 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                   alignment: Alignment.centerLeft,
                   child: Text(
                     'Delete Account',
-                    style: TextStyle(
+                    style: GoogleFonts.manrope(
                       color: Color(0xFF660000),
                       fontSize: 16,
-                      fontFamily: 'Manrope',
                       fontWeight: FontWeight.w400,
                       height: 0,
                       letterSpacing: 0.80,
@@ -189,7 +185,7 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                       child: Text(
                         'Proceed',
                         style: GoogleFonts.manrope(
-                          textStyle: TextStyle(
+                          textStyle: GoogleFonts.manrope(
                             color: Colors.white,
                             fontSize: 20,
                             letterSpacing: 2.25,

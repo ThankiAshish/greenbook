@@ -65,13 +65,25 @@ class StoryService {
       );
 
       // ignore: use_build_context_synchronously
-      httpErrorHandle(
-          response: response,
-          context: context,
-          onSuccess: () async {
-            storyProvider.setStory(response.body);
-          });
-    } catch (error) {
+    //   httpErrorHandle(
+    //       response: response,
+    //       context: context,
+    //       onSuccess: () async {
+    //         storyProvider.setStory(response.body);
+    //       });
+    // } catch (error) {
+    //   // ignore: use_build_context_synchronously
+    //   showSnackBar(context, error.toString());
+    // }
+      print(response.body);
+
+      if(response.statusCode == 200 && response.body != 'null') {
+        storyProvider.setStory(response.body);
+      } else {
+        storyProvider.clearStory();
+      }
+    }
+    catch(error) {
       // ignore: use_build_context_synchronously
       showSnackBar(context, error.toString());
     }

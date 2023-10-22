@@ -9,7 +9,7 @@ import 'package:greenbook/screens/leaderboard_page.dart';
 import 'package:greenbook/screens/profile_page.dart';
 import 'package:greenbook/services/user_services.dart';
 import 'package:greenbook/services/story_services.dart';
-import 'package:greenbook/widgets/gardener_grid_box.dart';
+import 'package:greenbook/widgets/custom_floating_action_button.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
@@ -20,8 +20,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final int _selectedIndex = 0;
-
   List<UsersList> usersList = [];
 
   LatestStory story = LatestStory(
@@ -195,7 +193,6 @@ class _HomePageState extends State<HomePage> {
                           child: Text(
                             'Leaderboard',
                             style: GoogleFonts.manrope(
-                              // color: const Color(0xFF000066),
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
                               height: 0,
@@ -229,7 +226,6 @@ class _HomePageState extends State<HomePage> {
                   Text(
                     'Latest Gardeners',
                     style: GoogleFonts.manrope(
-                      // color: const Color(0xFF000066),
                       fontSize: 14,
                       fontWeight: FontWeight.w700,
                       height: 0,
@@ -245,8 +241,7 @@ class _HomePageState extends State<HomePage> {
                     child: Text(
                       'View All',
                       style: GoogleFonts.manrope(
-                        // color: const Color(0xFF000066),
-                        fontSize: 8,
+                        fontSize: 10,
                         fontWeight: FontWeight.w400,
                         height: 0,
                       ),
@@ -268,7 +263,7 @@ class _HomePageState extends State<HomePage> {
                     GestureDetector(
                       onTap: () {
                         Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => const GardenersProfilePage()));
+                          MaterialPageRoute(builder: (context) => GardenersProfilePage(userId: usersList[i].id)));
                       },
                       child: Container(
                         width: 120,
@@ -329,109 +324,70 @@ class _HomePageState extends State<HomePage> {
             const SizedBox(
               height: 10,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: Container(
-                decoration: ShapeDecoration(
-                  color: Colors.green.shade200,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Row(
-                            children: [
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                story.title,
-                                style: GoogleFonts.manrope(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                  height: 0,
-                                  letterSpacing: 0.50,
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              IconButton(
-                                  onPressed: () {},
-                                  icon: const Icon(Icons.favorite)),
-                              IconButton(
-                                  onPressed: () {},
-                                  icon: const Icon(Icons.share)),
-                            ],
-                          ),
-                        ],
-                      ),
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => GardenersProfilePage(userId: story.userId)));
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Container(
+                  decoration: ShapeDecoration(
+                    color: Colors.green.shade200,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                  ],
+                  ),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Row(
+                              children: [
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  story.title,
+                                  style: GoogleFonts.manrope(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                    height: 0,
+                                    letterSpacing: 0.50,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                IconButton(
+                                    onPressed: () {},
+                                    icon: const Icon(Icons.favorite)),
+                                IconButton(
+                                    onPressed: () {},
+                                    icon: const Icon(Icons.share)),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             )
           ],
         ),
       ]),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        currentIndex: _selectedIndex,
-        onTap: (int index) {
-          // setState(() {
-          //   _selectedIndex = index;
-          // });
-          if (_selectedIndex != 0 && index == 0) {
-            Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const HomePage()));
-          }
-          if (index == 1) {
-            Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const ProfilePage()));
-          }
-          if (index == 2) {
-            showModalBottomSheet(
-                context: context,
-                builder: (BuildContext context) {
-                  return SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height: 400,
-                    child: Stack(children: [
-                      Positioned(
-                          right: 20,
-                          top: 20,
-                          child: GestureDetector(
-                              onTap: () => Navigator.pop(context),
-                              child: const Icon(Icons.close))),
-                    ]),
-                  );
-                });
-          }
-        },
-        selectedItemColor: Colors.black,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.menu),
-            label: 'Menu',
-          ),
-        ],
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButton: const Padding(
+        padding: EdgeInsets.only(bottom:50),
+        child: CustomFloatingActionButton(),
       ),
     );
   }

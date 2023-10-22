@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:greenbook/models/users_list.dart';
 import 'package:greenbook/providers/user_provider.dart';
+import 'package:greenbook/screens/garderners_profile_page.dart';
 import 'package:greenbook/services/user_services.dart';
-import 'package:greenbook/widgets/gardener_grid_box.dart';
 import 'package:provider/provider.dart';
 
 class GardenersPage extends StatefulWidget {
@@ -105,54 +105,60 @@ class _GardernersPageState extends State<GardenersPage> {
                           childAspectRatio: 1 / 1.1,
                         ), 
                         itemBuilder: (context, index) {
-                           return Container(
-                            decoration: ShapeDecoration(
-                              color: Colors.green.shade200,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5),
+                           return GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(builder: (context) => GardenersProfilePage(userId: usersList[index].id)));
+                            },
+                             child: Container(
+                              decoration: ShapeDecoration(
+                                color: Colors.green.shade200,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
                               ),
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                SizedBox(
-                                  width: 60,
-                                  height: 60,
-                                  child: CircleAvatar(
-                                    radius: 50,
-                                    backgroundImage: AssetImage('backend/images/${usersList[index].profilePicture}')
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    width: 60,
+                                    height: 60,
+                                    child: CircleAvatar(
+                                      radius: 50,
+                                      backgroundImage: AssetImage('backend/images/${usersList[index].profilePicture}')
+                                    ),
                                   ),
-                                ),
-                                Text(
-                                  usersList[index].name,
-                                  style: GoogleFonts.manrope(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
-                                    height: 0,
-                                    letterSpacing: 0.50,
+                                  Text(
+                                    usersList[index].name,
+                                    style: GoogleFonts.manrope(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500,
+                                      height: 0,
+                                      letterSpacing: 0.50,
+                                    ),
                                   ),
-                                ),
-                                // Padding(
-                                //   padding: const EdgeInsets.symmetric(horizontal: 2),
-                                //   child: SizedBox(
-                                //     height: 25,
-                                //     child: ElevatedButton(
-                                //       onPressed: () {},
-                                //       child: Text(
-                                //         'Following',
-                                //         style: GoogleFonts.manrope(
-                                //           fontSize: 10,
-                                //           fontWeight: FontWeight.w700,
-                                //           height: 0,
-                                //         ),
-                                //       ),
-                                //     ),
-                                //   ),
-                                // ),
-                              ],
-                            ),
-                          );
+                                  // Padding(
+                                  //   padding: const EdgeInsets.symmetric(horizontal: 2),
+                                  //   child: SizedBox(
+                                  //     height: 25,
+                                  //     child: ElevatedButton(
+                                  //       onPressed: () {},
+                                  //       child: Text(
+                                  //         'Following',
+                                  //         style: GoogleFonts.manrope(
+                                  //           fontSize: 10,
+                                  //           fontWeight: FontWeight.w700,
+                                  //           height: 0,
+                                  //         ),
+                                  //       ),
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                ],
+                              ),
+                                                     ),
+                           );
                         }
                       )
                     ],

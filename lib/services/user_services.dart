@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:greenbook/models/gardener_profile.dart';
 import 'package:greenbook/models/users_list.dart';
 import 'package:greenbook/utils/constants.dart';
 import 'package:http/http.dart' as http;
@@ -59,5 +60,27 @@ class UserServices {
     }
     
     return usersList;
+  }
+
+  static fetchGardenerById(String id) async {
+    final response = await http.get(Uri.parse('${Constants.uri}/api/user/fetch/$id'));
+
+    GardenerProfile gardenerProfile = GardenerProfile(
+      id: '', 
+      name: '', 
+      email: '', 
+      username: '', 
+      profilePicture: '', 
+      followers: [], 
+      following: []
+    );
+
+    if (response.statusCode == 200) {
+      print(response.body);
+      final Map<String, dynamic> data = json.decode(response.body);
+      gardenerProfile = GardenerProfile.fromJson(data);
+    }
+
+    return gardenerProfile;
   }
 }
