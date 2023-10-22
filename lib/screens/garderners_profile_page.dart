@@ -31,7 +31,7 @@ class GardenersProfilePage extends StatefulWidget {
 
 class _GardenersProfilePageState extends State<GardenersProfilePage> {
   bool isEnabled = false;
-  bool isFollowing = false;
+  bool isFollowingGardener = false;
 
   GardenerProfile gardenerDetails= GardenerProfile(
     id: '', 
@@ -54,6 +54,7 @@ class _GardenersProfilePageState extends State<GardenersProfilePage> {
 
   void fetchUserDetails() async {
     gardenerDetails = await UserServices.fetchGardenerById(widget.userId);
+    isFollowingGardener = gardenerDetails.followers.contains(widget.loggedInUserId);
     setState(() {});
   }
 
@@ -66,13 +67,17 @@ class _GardenersProfilePageState extends State<GardenersProfilePage> {
   }
 
   void followUser() async {
+    setState(() {
+      isFollowingGardener = true;
+    });
     await UserServices.followUser(widget.loggedInUserId, widget.userId);
-    setState(() {});
   }
 
   void unfollowUser() async {
+    setState(() {
+      isFollowingGardener = false;
+    });
     await UserServices.unfollowUser(widget.loggedInUserId, widget.userId);
-    setState(() {});
   }
 
   @override
@@ -146,7 +151,7 @@ class _GardenersProfilePageState extends State<GardenersProfilePage> {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(20.0),
-                    child: gardenerDetails.followers.contains(widget.loggedInUserId) ? Row(
+                    child: isFollowingGardener ? Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         CustomPrimaryFilledButton(text: "Unfollow", width: 150, height: 40, textSize: 20, onPressed: () {unfollowUser();}),
