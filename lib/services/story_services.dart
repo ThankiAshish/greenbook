@@ -1,6 +1,8 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:greenbook/models/latest_story.dart';
 import 'package:greenbook/providers/story_provider.dart';
 import 'package:greenbook/utils/constants.dart';
 import 'package:greenbook/utils/utils.dart';
@@ -16,7 +18,7 @@ class StoryService {
       required String body,
       required dynamic photo}) async {
     try {
-      final uri = Uri.parse('${Constants.ashishPCUri}/api/story/store');
+      final uri = Uri.parse('${Constants.uri}/api/story/store');
       final request = http.MultipartRequest('POST', uri);
       request.fields['userId'] = id;
       request.fields['title'] = title;
@@ -53,7 +55,7 @@ class StoryService {
 
   void getStory({required BuildContext context, required dynamic id}) async {
     try {
-      final uri = Uri.parse('${Constants.ashishPCUri}/api/story/fetch?id=$id');
+      final uri = Uri.parse('${Constants.uri}/api/story/fetch?id=$id');
       var storyProvider = Provider.of<StoryProvider>(context, listen: false);
       final response = await http.get(
         uri,
@@ -73,5 +75,43 @@ class StoryService {
       // ignore: use_build_context_synchronously
       showSnackBar(context, error.toString());
     }
+  }
+
+  static fetchLatestStory(String exceptLoggedInUser) async {
+    LatestStory story = LatestStory(
+      id: '', 
+      title: '', 
+      body: '', 
+      likes: [], 
+      bannerPicture: '', 
+      userId: ''
+    );
+
+    var headers = {
+      'Content-Type': 'application/json'
+    };
+
+    var request = http.Request(
+      'POST',
+      Uri.parse('${Constants.uri}/api/story/fetch/latest')
+    );
+
+    request.body = json.encode({
+      "userId": exceptLoggedInUser  
+    });
+
+    request.headers.addAll(headers);
+    
+    http.StreamedResponse response = await request.send();
+    var res = await http.Response.fromStream(response);
+    
+    if(res.statusCode == 200) {
+      print(res.body);
+
+      Map<String, dynamic> jsonRes = json.decode(res.body);
+      story = LatestStory.fromJson(jsonRes);
+    }
+    
+    return story;
   }
 }

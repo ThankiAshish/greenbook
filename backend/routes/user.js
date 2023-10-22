@@ -3,6 +3,41 @@ const userRouter = express.Router();
 const User = require('../models/user.model');
 const mongoose = require('mongoose');
 
+userRouter.post('/api/user/fetch/all', async (req, res) => {
+    try {
+        const { email } = req.body;
+        const result = 
+            await User.find({ email: {$ne: email}})
+            .select("_id name email username profilePicture");
+        
+        if(result.length > 0) {
+            return res.status(200).json(result);
+        } else {
+            return res.status(404).json({
+                error: "No Users Found"
+            });
+        }
+    } catch(err) {
+        res.status(500).json({
+            error: err.message
+        });
+    }
+});
+
+userRouter.post('/api/user/fetch/latest', async (req, res) => {
+    try {
+        const { email } = req.body;
+        const result =
+            await User.find({ email: {$ne: email} }).sort({_id: -1 }).limit(10)
+            .select("_id name email username profilePicture");
+        res.status(200).json(result);
+    } catch(err) {
+        res.status(500).json({
+            error: err.message
+        });
+    }
+});
+
 userRouter.post('/api/user/search', async (req, res) => {
     try {
         const pattern = new RegExp("^" + req.body.searchQuery);

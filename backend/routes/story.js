@@ -135,4 +135,18 @@ storyRouter.get('/api/story/fetch', async (req, res) => {
     }
 });
 
+storyRouter.post('/api/story/fetch/latest', async (req, res) => {
+    try {
+        const { userId } = req.body;
+        const result =
+            await Story.find({ userId: {$ne: userId} }).sort({_id: -1 }).limit(1)
+            .select("_id title body likes bannerPicture userId");
+        res.status(200).json(result[0]);
+    } catch(err) {
+        res.status(500).json({
+            error: err.message
+        });
+    }
+});
+
 module.exports = storyRouter;

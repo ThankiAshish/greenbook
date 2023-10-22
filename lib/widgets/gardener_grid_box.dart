@@ -16,12 +16,6 @@ class _GardenerGridBoxState extends State<GardenerGridBox> {
       height: 100,
       decoration: ShapeDecoration(
         color: Colors.green.shade200,
-        // gradient: const LinearGradient(
-        //   colors: [Color.fromARGB(255, 85, 156, 73), Color(0x0051ff00)],
-        //   stops: [0, 0.99],
-        //   begin: Alignment.topLeft,
-        //   end: Alignment.bottomRight,
-        // ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5),
         ),
@@ -41,7 +35,6 @@ class _GardenerGridBoxState extends State<GardenerGridBox> {
           Text(
             'Username',
             style: GoogleFonts.manrope(
-              // color: const Color(0xFF23401E),
               fontSize: 10,
               fontWeight: FontWeight.w500,
               height: 0,

@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:greenbook/models/latest_story.dart';
+import 'package:greenbook/models/users_list.dart';
 import 'package:greenbook/providers/user_provider.dart';
 import 'package:greenbook/screens/gardeners_page.dart';
+import 'package:greenbook/screens/garderners_profile_page.dart';
 import 'package:greenbook/screens/leaderboard_page.dart';
 import 'package:greenbook/screens/profile_page.dart';
+import 'package:greenbook/services/user_services.dart';
+import 'package:greenbook/services/story_services.dart';
 import 'package:greenbook/widgets/gardener_grid_box.dart';
 import 'package:provider/provider.dart';
 
@@ -16,6 +21,36 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final int _selectedIndex = 0;
+
+  List<UsersList> usersList = [];
+
+  LatestStory story = LatestStory(
+    id: '', 
+    title: '', 
+    body: '', 
+    likes: [], 
+    bannerPicture: '', 
+    userId: ''
+  );
+
+  @override
+  void initState() {
+    fetchUserList();
+    fetchLatestStory();
+    super.initState();
+  }
+
+  void fetchUserList() async {
+    final user = Provider.of<UserProvider>(context, listen: false).user;
+    usersList = await UserServices.fetchLatestUsers(user.email);
+    setState(() {});
+  }
+
+  void fetchLatestStory() async {
+    final user = Provider.of<UserProvider>(context, listen: false).user;
+    story = await StoryService.fetchLatestStory(user.id);
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +72,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             Text(
-              'X Points',
+              '${user.points} Points',
               style: GoogleFonts.manrope(
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
@@ -99,12 +134,6 @@ class _HomePageState extends State<HomePage> {
             height: 140,
             decoration: ShapeDecoration(
               color: Colors.green.shade200,
-              // gradient: const LinearGradient(
-              //   colors: [Color(0xff306028), Color(0x0051ff00)],
-              //   stops: [0, 1],
-              //   begin: Alignment.topLeft,
-              //   end: Alignment.bottomRight,
-              // ),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
@@ -198,7 +227,7 @@ class _HomePageState extends State<HomePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Gardeners',
+                    'Latest Gardeners',
                     style: GoogleFonts.manrope(
                       // color: const Color(0xFF000066),
                       fontSize: 14,
@@ -235,12 +264,46 @@ class _HomePageState extends State<HomePage> {
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 scrollDirection: Axis.horizontal,
                 children: [
-                  for (int i = 0; i < 10; i++)
+                  for (int i = 0; i < usersList.length; i++)
                     GestureDetector(
-                      onTap: null,
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => const GardenersProfilePage()));
+                      },
                       child: Container(
+                        width: 120,
                         margin: const EdgeInsets.only(right: 10),
-                        child: const GardenerGridBox(),
+                        child: Container(
+                          decoration: ShapeDecoration(
+                            color: Colors.green.shade200,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                width: 60,
+                                height: 60,
+                                child: CircleAvatar(
+                                  radius: 50,
+                                  backgroundImage: AssetImage('backend/images/${usersList[i].profilePicture}')
+                                ),
+                              ),
+                              Text(
+                                usersList[i].name,
+                                style: GoogleFonts.manrope(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                  height: 0,
+                                  letterSpacing: 0.50,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ),
                 ],
@@ -253,9 +316,8 @@ class _HomePageState extends State<HomePage> {
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Row(children: [
                 Text(
-                  'Popular Story',
+                  'Latest Story',
                   style: GoogleFonts.manrope(
-                    // color: const Color(0xFF000066),
                     fontSize: 14,
                     fontWeight: FontWeight.w700,
                     height: 0,
@@ -271,12 +333,6 @@ class _HomePageState extends State<HomePage> {
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: Container(
                 decoration: ShapeDecoration(
-                  // gradient: const LinearGradient(
-                  //   colors: [Color(0xff306028), Color(0x0051ff00)],
-                  //   stops: [0, 1],
-                  //   begin: Alignment.topLeft,
-                  //   end: Alignment.bottomRight,
-                  // ),
                   color: Colors.green.shade200,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -297,7 +353,7 @@ class _HomePageState extends State<HomePage> {
                                 width: 10,
                               ),
                               Text(
-                                'Story Title',
+                                story.title,
                                 style: GoogleFonts.manrope(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w500,
