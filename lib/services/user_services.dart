@@ -83,4 +83,58 @@ class UserServices {
 
     return gardenerProfile;
   }
+
+   static followUser(String loggedInUserId, String toFollowId) async {
+     bool isFollowing = false;
+     var headers = {
+       'Content-Type': 'application/json'
+     };
+
+     var request = http.Request(
+         'PUT',
+         Uri.parse('${Constants.uri}/api/user/follow')
+     );
+
+     request.body = json.encode({
+       "loggedInUserId": loggedInUserId,
+       "toFollowId": toFollowId
+     });
+
+     request.headers.addAll(headers);
+
+     http.StreamedResponse response = await request.send();
+     var res = await http.Response.fromStream(response);
+
+     if(res.statusCode == 200) {
+       isFollowing = true;
+     }
+     return isFollowing;
+  }
+
+  static unfollowUser(String loggedInUserId, String toFollowId) async {
+    bool isFollowing = true;
+    var headers = {
+      'Content-Type': 'application/json'
+    };
+
+    var request = http.Request(
+        'PUT',
+        Uri.parse('${Constants.uri}/api/user/unfollow')
+    );
+
+    request.body = json.encode({
+      "loggedInUserId": loggedInUserId,
+      "toFollowId": toFollowId
+    });
+
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+    var res = await http.Response.fromStream(response);
+
+    if(res.statusCode == 200) {
+      isFollowing = false;
+    }
+    return isFollowing;
+  }
 }

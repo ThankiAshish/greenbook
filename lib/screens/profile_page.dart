@@ -131,15 +131,6 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                       ),
                       // About
-                      // Padding(
-                      //   padding: const EdgeInsets.symmetric(
-                      //       horizontal: 30.0, vertical: 10.0),
-                      //   child: Text(
-                      //     story.body,
-                      //     style: const TextStyle(fontSize: 16.0),
-                      //     textAlign: TextAlign.justify,
-                      //   ),
-                      // ),
                       Card(
                         margin: const EdgeInsets.all(30),
                         child: Padding(
@@ -228,33 +219,30 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     ],
                   )
-                  : Expanded(
-                    flex: 1,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Column(
-                          children: [
-                            Image.asset(
-                              "assets/images/jungle-page-not-found-1.png",
+                  : Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Column(
+                        children: [
+                          Image.asset(
+                            "assets/images/jungle-page-not-found-1.png",
+                          ),
+                          Center(
+                            child: CustomPrimaryFilledButton(
+                                text: 'Create Story',
+                                width: 325,
+                                height: 60,
+                                textSize: 18,
+                                onPressed: () {
+                                  Navigator.of(context).push((MaterialPageRoute(
+                                    builder: (ctx) => const CreateStory(),
+                                  )));
+                                }
                             ),
-                            Center(
-                              child: CustomPrimaryFilledButton(
-                                  text: 'Create Story',
-                                  width: 325,
-                                  height: 60,
-                                  textSize: 18,
-                                  onPressed: () {
-                                    Navigator.of(context).push((MaterialPageRoute(
-                                      builder: (ctx) => const CreateStory(),
-                                    )));
-                                  }
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ],
               ),

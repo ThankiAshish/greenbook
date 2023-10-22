@@ -126,4 +126,54 @@ class StoryService {
     
     return story;
   }
+
+  static likeStory(String id, String userId) async {
+    var headers = {
+      'Content-Type': 'application/json'
+    };
+
+    var request = http.Request(
+        'PUT',
+        Uri.parse('${Constants.uri}/api/story/like')
+    );
+
+    request.body = json.encode({
+      "userId": userId,
+      "id": id
+    });
+
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+    var res = await http.Response.fromStream(response);
+
+    if(res.statusCode == 200) {
+      print(res.body);
+    }
+  }
+
+  static unlikeStory(String id, String userId) async {
+    var headers = {
+      'Content-Type': 'application/json'
+    };
+
+    var request = http.Request(
+        'PUT',
+        Uri.parse('${Constants.uri}/api/story/unlike')
+    );
+
+    request.body = json.encode({
+      "userId": userId,
+      "id": id
+    });
+
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+    var res = await http.Response.fromStream(response);
+
+    if(res.statusCode == 200) {
+      print(res.body);
+    }
+  }
 }
