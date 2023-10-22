@@ -263,7 +263,7 @@ class _HomePageState extends State<HomePage> {
                     GestureDetector(
                       onTap: () {
                         Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => GardenersProfilePage(userId: usersList[i].id)));
+                          MaterialPageRoute(builder: (context) => GardenersProfilePage(loggedInUserId:  user.id, userId: usersList[i].id)));
                       },
                       child: Container(
                         width: 120,
@@ -327,7 +327,7 @@ class _HomePageState extends State<HomePage> {
             GestureDetector(
               onTap: () {
                 Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => GardenersProfilePage(userId: story.userId)));
+                  MaterialPageRoute(builder: (context) => GardenersProfilePage(loggedInUserId:  user.id, userId: story.userId)));
               },
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),

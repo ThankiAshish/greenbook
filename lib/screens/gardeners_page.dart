@@ -30,6 +30,8 @@ class _GardernersPageState extends State<GardenersPage> {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserProvider>(context).user;
+
     return Container(
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
@@ -108,7 +110,7 @@ class _GardernersPageState extends State<GardenersPage> {
                            return GestureDetector(
                             onTap: () {
                               Navigator.of(context).push(
-                                MaterialPageRoute(builder: (context) => GardenersProfilePage(userId: usersList[index].id)));
+                                MaterialPageRoute(builder: (context) => GardenersProfilePage(loggedInUserId:  user.id, userId: usersList[index].id)));
                             },
                              child: Container(
                               decoration: ShapeDecoration(
