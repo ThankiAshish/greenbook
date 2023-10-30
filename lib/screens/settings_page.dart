@@ -2,6 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:greenbook/providers/user_provider.dart';
+import 'package:greenbook/screens/account_settings_page.dart';
+import 'package:greenbook/screens/profile_settings_page.dart';
+import 'package:greenbook/services/auth_services.dart';
+import 'package:greenbook/widgets/custom_floating_action_button.dart';
+import 'package:greenbook/widgets/custom_primary_filled_button.dart';
+import 'package:provider/provider.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -11,10 +18,10 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  bool showInvalidAmountMessage = false;
-  int currIndex = 0;
   @override
   Widget build(BuildContext context) {
+    final AuthService authService = AuthService();
+
     return Container(
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
@@ -68,14 +75,14 @@ class _SettingsPageState extends State<SettingsPage> {
                     children: [
                       TextButton(
                         onPressed: () {
-                          // Add action for Profile button
+                           Navigator.of(context).push(MaterialPageRoute(
+                              builder: (ctx) => const ProfileSettings()));
                         },
                         child: Text(
                           'Profile',
-                          style: TextStyle(
+                          style: GoogleFonts.manrope(
                             color: Color(0xFF20411B),
                             fontSize: 20,
-                            fontFamily: 'Manrope',
                             fontWeight: FontWeight.w400,
                             height: 0,
                             letterSpacing: 2,
@@ -84,14 +91,14 @@ class _SettingsPageState extends State<SettingsPage> {
                       ),
                       TextButton(
                         onPressed: () {
-                          // Add action for Account button
+                           Navigator.of(context).push(MaterialPageRoute(
+                              builder: (ctx) => const AccountSettingsPage()));
                         },
                         child: Text(
                           'Account',
-                          style: TextStyle(
+                          style: GoogleFonts.manrope(
                             color: Color(0xFF20411B),
                             fontSize: 20,
-                            fontFamily: 'Manrope',
                             fontWeight: FontWeight.w400,
                             height: 0,
                             letterSpacing: 2,
@@ -100,14 +107,13 @@ class _SettingsPageState extends State<SettingsPage> {
                       ),
                       TextButton(
                         onPressed: () {
-                          // Add action for Notifications button
+
                         },
                         child: Text(
                           'Notifications',
-                          style: TextStyle(
+                          style: GoogleFonts.manrope(
                             color: Color(0xFF20411B),
                             fontSize: 20,
-                            fontFamily: 'Manrope',
                             fontWeight: FontWeight.w400,
                             height: 0,
                             letterSpacing: 2,
@@ -116,7 +122,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       ),
                       TextButton(
                         onPressed: () {
-                          // Add action for Remove Story button
+
                         },
                         child: Text(
                           'Remove Story',
@@ -134,67 +140,29 @@ class _SettingsPageState extends State<SettingsPage> {
                   ),
                 ),
               ),
-
-               Expanded(
-                  child: Align(
-                    alignment: Alignment.bottomCenter,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // Add your button click action here
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFF660000),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 130, vertical: 17),
-                      ),
-                      child: Text(
-                        'Logout',
-                        style: GoogleFonts.manrope(
-                          textStyle: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            letterSpacing: 2.25,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+              Expanded(
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: CustomPrimaryFilledButton(
+                  text: "Logout", 
+                  width: 340, 
+                  height: 60, 
+                  textSize: 18, 
+                  onPressed: (){
+                    authService.signOut(context);
+                  })
                 ),
-            SizedBox(
-              height: 20,
-            )
+              ),
+              SizedBox(
+                height: 20,
+              ),
             ],
           ),
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          currentIndex: currIndex,
-          onTap: (int index) {
-            setState(() {
-              currIndex = index;
-            });
-          },
-          selectedItemColor: Colors.blue,
-          unselectedItemColor: Colors.black,
-          iconSize: 35.0,
-          items: [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.add_circle),
-              label: 'Add',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.menu),
-              label: 'Menu',
-            ),
-          ],
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+        floatingActionButton: Padding(
+          padding: const EdgeInsets.only(bottom:90),
+          child: CustomFloatingActionButton()
         ),
       ),
     );

@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:greenbook/models/user.dart';
 import 'package:greenbook/providers/user_provider.dart';
 import 'package:greenbook/screens/home_page.dart';
 import 'package:greenbook/screens/login_page.dart';
@@ -14,45 +13,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http_parser/http_parser.dart';
 
 class AuthService {
-  void registerUser({
-    required BuildContext context,
-    required String name, 
-    required String email,
-    required String username,
-    required String password,
-    required dynamic profilePicture
-  }) async {
+  void registerUser(
+      {required BuildContext context,
+      required String name,
+      required String email,
+      required String username,
+      required String password,
+      required dynamic profilePicture}) async {
     try {
-      // User user = User(
-      //   id: '',
-      //   name: name,
-      //   email: email,
-      //   username: username,
-      //   password: password,
-      //   token: '',
-      //   profilePicture: ''
-      // );
-
-      // http.Response res = await http.post(
-      //   Uri.parse('${Constants.uri}/api/register'),
-      //   body: user.toJson(),
-      //   headers: <String, String> {
-      //     'Content-Type': 'application/json; charset=UTF-8',
-      //   }
-      // );
-
-      // // ignore: use_build_context_synchronously
-      // httpErrorHandle(
-      //   response:  res,
-      //   context: context,
-      //   onSuccess: () {
-      //     showSnackBar(
-      //       context, 
-      //       'Account Created!, Now you can Login!'
-      //     );
-      //   }
-      // );
-
       final uri = Uri.parse('${Constants.uri}/api/register');
       final request = http.MultipartRequest('POST', uri);
       request.fields['name'] = name;
@@ -60,24 +28,18 @@ class AuthService {
       request.fields['email'] = email;
       request.fields['password'] = password;
 
-      print(profilePicture);
-
       final imageFile = File(profilePicture);
-      final bytes = imageFile.readAsBytesSync();
-
-      // final imageFile = await http.MultipartFile.fromPath('photo', profilePicture);
-      // final multipartFile = http.MultipartFile.fromBytes('photo', bytes);
-      // final multipartFile = http.MultipartFile('photo', imageFile.readAsBytes().asStream(), imageFile.lengthSync(), filename: imageFile.path.split("/").last);
-      //final multipartFile = http.MultipartFile.fromBytes('photo', bytes, filename: imageFile.path.split("/").last);
       String extension = imageFile.path.split('.').last;
-      final multipartFile = await http.MultipartFile.fromPath('photo', imageFile.path, contentType: MediaType('image', extension));
+      final multipartFile = await http.MultipartFile.fromPath(
+          'photo', imageFile.path,
+          contentType: MediaType('image', extension));
 
-      print(multipartFile.filename);
       request.files.add(multipartFile);
 
       request.headers.addAll({
         "Content-Type": "multipart/form-data",
-        "content-disposition": 'form-data; name="photo"; filename="${multipartFile.filename}"'
+        "content-disposition":
+            'form-data; name="photo"; filename="${multipartFile.filename}"'
       });
 
       final response = await request.send();
@@ -87,40 +49,29 @@ class AuthService {
         final userData = json.decode(responseBody);
 
         // ignore: use_build_context_synchronously
-        showSnackBar(
-             context, 
-             'Account Created!, Now you can Login!'
-        );
+        showSnackBar(context, 'Account Created!, Now you can Login!');
       } else {
         // ignore: use_build_context_synchronously
-        showSnackBar(
-             context, 
-             'Failed to Create Account!'
-        );
+        showSnackBar(context, 'Failed to Create Account!');
       }
 
       // await response.stream.bytesToString();
-
     } catch (error) {
       // ignore: use_build_context_synchronously
       showSnackBar(context, error.toString());
     }
   }
 
-  void loginUser({
-    required BuildContext context,
-    required String email,
-    required String password
-  }) async {
+  void loginUser(
+      {required BuildContext context,
+      required String email,
+      required String password}) async {
     try {
       var userProvider = Provider.of<UserProvider>(context, listen: false);
       final navigator = Navigator.of(context);
       http.Response res = await http.post(
         Uri.parse('${Constants.uri}/api/login'),
-        body: jsonEncode({
-          'email': email,
-          'password': password
-        }),
+        body: jsonEncode({'email': email, 'password': password}),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -128,20 +79,18 @@ class AuthService {
 
       // ignore: use_build_context_synchronously
       httpErrorHandle(
-        response: res, 
-        context: context, 
-        onSuccess: () async {
-          SharedPreferences preferences = await SharedPreferences.getInstance();
-          userProvider.setUser(res.body);
-          await preferences.setString('x-auth-token', jsonDecode(res.body)['token']);
-          navigator.pushAndRemoveUntil(
-            MaterialPageRoute(
-              builder: (context) => const HomePage()
-            ), 
-            (route) => false
-          );
-        }
-      );
+          response: res,
+          context: context,
+          onSuccess: () async {
+            SharedPreferences preferences =
+                await SharedPreferences.getInstance();
+            userProvider.setUser(res.body);
+            await preferences.setString(
+                'x-auth-token', jsonDecode(res.body)['token']);
+            navigator.pushAndRemoveUntil(
+                MaterialPageRoute(builder: (context) => const HomePage()),
+                (route) => false);
+          });
     } catch (error) {
       // ignore: use_build_context_synchronously
       showSnackBar(context, error.toString());
@@ -155,42 +104,37 @@ class AuthService {
     SharedPreferences preferences = await SharedPreferences.getInstance();
 
     String? token = preferences.getString('x-auth-token');
-    if(token == null) {
+    if (token == null) {
       preferences.setString('x-auth-token', '');
     }
 
     var tokenResponse = await http.post(
-      Uri.parse('${Constants.uri}/tokenValidation'),
-      headers: <String, String> {
-        'Content-Type': 'application/json; charset=UTF-8',
-        'x-auth-token': token!,
-      }
-    );
+        Uri.parse('${Constants.uri}/tokenValidation'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': token!,
+        });
 
     var response = jsonDecode(tokenResponse.body);
 
-    if(response == true) {
+    if (response == true) {
       http.Response userResponse = await http.get(
-        Uri.parse('${Constants.uri}/'),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-          'x-auth-token': token
-        }
-      );
+          Uri.parse('${Constants.uri}/'),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+            'x-auth-token': token
+          });
 
       userProvider.setUser(userResponse.body);
     }
-  } 
+  }
 
   void signOut(BuildContext context) async {
     final navigator = Navigator.of(context);
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.setString('x-auth-token', '');
     navigator.pushAndRemoveUntil(
-      MaterialPageRoute(
-        builder: (context) => const LoginPage()
-      ),
-      (route) => false
-    );
+        MaterialPageRoute(builder: (context) => const LoginPage()),
+        (route) => false);
   }
 }

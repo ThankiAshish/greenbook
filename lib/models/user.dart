@@ -8,6 +8,9 @@ class User {
   final String token;
   final String password;
   final dynamic profilePicture;
+  final List<dynamic> followers;
+  final List<dynamic> following;
+  final dynamic points;
 
   User ({
     required this.id,
@@ -16,7 +19,10 @@ class User {
     required this.username,
     required this.token,
     required this.password,
-    required this.profilePicture
+    required this.profilePicture,
+    required this.followers,
+    required this.following,
+    required this.points
   });
 
   Map<String, dynamic> toMap() {
@@ -26,7 +32,10 @@ class User {
       'username': username,
       'token': token,
       'password': password,
-      'profilePicture': profilePicture
+      'profilePicture': profilePicture,
+      'followers': followers,
+      'following': following,
+      'points': points
     };
   }
 
@@ -38,7 +47,10 @@ class User {
       username: map['username'] ?? '',
       token: map['token'] ?? '',
       password: map['password'] ?? '',
-      profilePicture: map['profilePicture'] ?? ''
+      profilePicture: map['profilePicture'] ?? '',
+      followers: map['followers'] ?? [],
+      following: map['following'] ?? [],
+      points: map['points'] ?? 0
     );
   }
 

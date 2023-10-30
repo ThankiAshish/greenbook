@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:greenbook/widgets/gardener_grid_box.dart';
+import 'package:greenbook/models/users_list.dart';
+import 'package:greenbook/providers/user_provider.dart';
+import 'package:greenbook/screens/garderners_profile_page.dart';
+import 'package:greenbook/services/user_services.dart';
+import 'package:provider/provider.dart';
 
 class GardenersPage extends StatefulWidget {
   const GardenersPage({super.key});
@@ -10,9 +14,24 @@ class GardenersPage extends StatefulWidget {
 }
 
 class _GardernersPageState extends State<GardenersPage> {
-  int currIndex = 0;
+  List<UsersList> usersList = [];
+
+  @override
+  void initState() {
+    fetchUserList();
+    super.initState();
+  }
+
+  void fetchUserList() async {
+    final user = Provider.of<UserProvider>(context, listen: false).user;
+    usersList = await UserServices.fetchUsers(user.email);
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserProvider>(context).user;
+
     return Container(
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
@@ -64,47 +83,93 @@ class _GardernersPageState extends State<GardenersPage> {
               ),
               const SizedBox(height: 20),
               Expanded(
-                child: CustomScrollView(
-                  slivers: [
-                    SliverGrid.count(
-                      crossAxisCount: 3,
-                      mainAxisSpacing: 10.0,
-                      crossAxisSpacing: 10.0,
-                      childAspectRatio: 1 / 1.3,
-                      children: List.generate(24, (index) {
-                        return const GardenerGridBox();
-                      }),
-                    ),
-                  ],
+                child: RefreshIndicator(
+                  onRefresh: () async {
+                    fetchUserList();
+                  },
+                  child: CustomScrollView(
+                    slivers: [
+                      // SliverGrid.count(
+                      //   crossAxisCount: 3,
+                      //   mainAxisSpacing: 10.0,
+                      //   crossAxisSpacing: 10.0,
+                      //   childAspectRatio: 1 / 1.3,
+                      //   children: List.generate(24, (index) {
+                      //     return const GardenerGridBox();
+                      //   }),
+                      // ),
+                      SliverGrid.builder(
+                        itemCount: usersList.length,
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3,
+                          mainAxisSpacing: 10,
+                          crossAxisSpacing: 10,
+                          childAspectRatio: 1 / 1.1,
+                        ), 
+                        itemBuilder: (context, index) {
+
+                           return GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(builder: (context) => GardenersProfilePage(loggedInUserId:  user.id, userId: usersList[index].id)));
+                            },
+                             child: Container(
+                              decoration: ShapeDecoration(
+                                color: Colors.green.shade200,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    width: 60,
+                                    height: 60,
+                                    child: CircleAvatar(
+                                      radius: 50,
+                                      backgroundImage: AssetImage('backend/images/${usersList[index].profilePicture}')
+                                    ),
+                                  ),
+                                  Text(
+                                    usersList[index].name,
+                                    style: GoogleFonts.manrope(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500,
+                                      height: 0,
+                                      letterSpacing: 0.50,
+                                    ),
+                                  ),
+                                  // Padding(
+                                  //   padding: const EdgeInsets.symmetric(horizontal: 2),
+                                  //   child: SizedBox(
+                                  //     height: 25,
+                                  //     child: ElevatedButton(
+                                  //       onPressed: () {},
+                                  //       child: Text(
+                                  //         'Following',
+                                  //         style: GoogleFonts.manrope(
+                                  //           fontSize: 10,
+                                  //           fontWeight: FontWeight.w700,
+                                  //           height: 0,
+                                  //         ),
+                                  //       ),
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                ],
+                              ),
+                            ),
+                          );
+                        }
+                      )
+                    ],
+                  ),
                 ),
               ),
             ],
           ),
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          currentIndex: currIndex,
-          onTap: (int index) {
-            setState(() {
-              currIndex = index;
-            });
-          },
-          selectedItemColor: Colors.black,
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.add_circle),
-              label: 'Add',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.menu),
-              label: 'Menu',
-            ),
-          ],
         ),
       ),
     );

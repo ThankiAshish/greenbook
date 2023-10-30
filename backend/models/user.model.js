@@ -36,6 +36,22 @@ const UserSchema = new Schema({
         type: String,
         trim: true,
     },
+    points: {
+        type: Number,
+        default: 0
+    },
+    followers: [
+        {
+            type: String,
+            ref: 'User'
+        }
+    ],
+    following: [
+        {
+            type: String,
+            ref: 'User'
+        }
+    ]
 });
 
 const UserModel = db.model("user", UserSchema);
