@@ -13,8 +13,13 @@ The purpose of this specific software is to provide a platform to those such gar
 
 ## Installation
 
+- You need to have NodeJS LTS version installed on your system.
+- You also need MongoDB Locally installed on your system.
+- After this when you wish to run the app using emulator you can get the IP address from ipconfig command in terminal then replace the uri constant inside the ./utils/constants.dart file
+- However if you are using mobile, first of all connect your mobile internet to your pc then get that IP address and replace the uri constant as discussed above
+- Once that is done, go ahead to the ./backend/config folder and replace the MongoDBLocalURI with your MongoDB uri connection string 
 - You must have the working flutter development enviornment with an android/ios device or working emulator.
-- You can install the dependencies before running the application.
+- You can install the dependencies before running the application. (pub get for flutter) and (npm i) for backend folder
 - Then you can simply run the flutter run command and select your device.
 
 ## Credits
