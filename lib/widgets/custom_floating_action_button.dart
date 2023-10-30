@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:greenbook/screens/donate_page.dart';
 
 import '../screens/gardeners_page.dart';
 import '../screens/home_page.dart';
@@ -98,6 +99,24 @@ class _CustomFloatingActionButtonState extends State<CustomFloatingActionButton>
                             ),
                           ),
                         ),
+                        // TextButton(
+                        //   onPressed: () {
+                        //     Navigator.of(context).push(
+                        //         MaterialPageRoute(builder: (ctx) => const DonatePage()));
+                        //   },
+                        //   child: Text(
+                        //     "Donate",
+                        //     style: GoogleFonts.manrope(
+                        //       textStyle: const TextStyle(
+                        //         color: Color(0xFF20411B),
+                        //         fontSize: 20,
+                        //         fontWeight: FontWeight.w400,
+                        //         letterSpacing: 2,
+                        //         height: 0,
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
                         TextButton(
                           onPressed: () {
                             Navigator.of(context).push(

@@ -1,16 +1,29 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, avoid_print
 
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:greenbook/utils/constants.dart';
 import 'package:greenbook/widgets/custom_floating_action_button.dart';
 import 'package:greenbook/widgets/custom_primary_filled_button.dart';
 import 'package:greenbook/widgets/custom_text_field.dart';
+import 'package:http/http.dart' as http;
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 
 class DonatePage extends StatefulWidget {
-  const DonatePage({super.key});
+  final String fromUser;
+  final String toUser;
+  final Key? key;
+
+  const DonatePage({
+    this.key,
+    required this.fromUser,
+    required this.toUser
+  }) : super(key: key);
 
   @override
   State<DonatePage> createState() => _DonatePageState();
@@ -20,6 +33,7 @@ class _DonatePageState extends State<DonatePage> {
   bool showInvalidAmountMessage = false;
   int currIndex = 0;
   final _razorpay = Razorpay();
+  String _currentOrderId = "";
 
   var amountController = TextEditingController();
   TextEditingController gardenerNameController = TextEditingController();
@@ -27,17 +41,94 @@ class _DonatePageState extends State<DonatePage> {
 
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
-  // Do something when payment succeeds
-  print("Payment Done");
+    print("RazorSuccess:  ${response.paymentId!} -- ${response.orderId!} -- ${response.signature!}");
+    _saveDetails(widget.fromUser, widget.toUser, response.orderId.toString(), response.paymentId.toString(), response.signature.toString());
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
-  // Do something when payment fails
-   print("Payment failed");
+    print("RazorSuccess:  ${response.code.toString()} -- ${response.message}");
   }
 
   void _handleExternalWallet(ExternalWalletResponse response) {
-  // Do something when an external wallet is selected
+    print("RazorWallet : ${response.walletName!}");
+  }
+
+  _getOrderId(int amount) async {
+    var headers = {
+      'Content-Type': 'application/json'
+    };
+
+    var request = http.Request(
+      'POST', 
+      Uri.parse('${Constants.uri}/api/donate/createOrder')
+    );
+    
+    request.body = json.encode({
+      "amount": 100,
+      "currency": "INR"
+    });
+    
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+    http.Response res = await http.Response.fromStream(response);
+
+    if (res.statusCode == 200) {
+      print(res.body);
+      var decoded = jsonDecode(res.body);
+      print(decoded);
+      _currentOrderId = decoded['id'];
+      _startPayment(decoded['id'], amount);
+    }
+    else {
+      print(res.body);
+    }
+  }
+
+  _startPayment(String orderId, int amount) async {
+    var options = {
+      'key': 'rzp_test_HrNbqjmet7vmou',
+      'order_id': orderId,
+      'amount': amount,
+      'name': 'greenbook',
+      'description': 'Demo',
+      'timeout': 60,
+    };
+    _razorpay.open(options);
+  }
+
+  _saveDetails(String fromUser, String toUser, String orderId, String paymentId, String signature) async {
+    var headers = {
+      'Content-Type': 'application/json',
+    };
+
+    var request = http.Request(
+      'POST', 
+      Uri.parse('${Constants.uri}/api/donate/verifyOrder')
+    );
+    
+    request.body = json.encode({
+      "fromUser": fromUser,
+      "toUser": toUser,
+      "orderId": _currentOrderId,
+      "rzOrderId": orderId,
+      "paymentId": paymentId,
+      "signature": signature
+    });
+    
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+    http.Response res = await http.Response.fromStream(response);
+
+    if (res.statusCode == 200) {
+      print(res.body);
+      var decoded = jsonDecode(res.body);
+      print(decoded);
+    }
+    else {
+      print(res.body);
+    }
   }
 
   @override
@@ -154,18 +245,8 @@ class _DonatePageState extends State<DonatePage> {
                   height: 50, 
                   textSize: 18, 
                   onPressed:(){
-                     var options = {
-                        'key': 'rzp_test_BXJkto30f8wpOR',
-                        'amount': (int.parse(amountController.text)*100).toString(), //in the smallest currency sub-unit.
-                        'name': 'Jay Kiranbhai Joshi',
-                        'description': 'Demo',
-                        'timeout': 300, // in seconds
-                        'prefill': {
-                          'contact': '8787878787',
-                          'email': 'hehe.vro@example.com'
-                        }
-                      };
-                        _razorpay.open(options);
+                    int amount = int.parse(amountController.text) * 100;
+                     _getOrderId(amount);
                   } 
                   ),
           

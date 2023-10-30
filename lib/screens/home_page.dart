@@ -395,7 +395,7 @@ class _HomePageState extends State<HomePage> {
                                       onPressed: () {
                                         likeUserStory();
                                       },
-                                      icon: const Icon(Icons.favorite, color: Colors.black),
+                                      icon: const Icon(Icons.favorite_border_outlined, color: Colors.black),
                                     ),
                                 IconButton(
                                     onPressed: () {},

@@ -45,8 +45,8 @@ class AuthService {
       final response = await request.send();
 
       if (response.statusCode == 200) {
-        // final responseBody = await response.stream.bytesToString();
-        // final userData = json.decode(responseBody);
+        final responseBody = await response.stream.bytesToString();
+        final userData = json.decode(responseBody);
 
         // ignore: use_build_context_synchronously
         showSnackBar(context, 'Account Created!, Now you can Login!');

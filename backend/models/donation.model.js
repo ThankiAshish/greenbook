@@ -12,12 +12,17 @@ const DonationSchema = new Schema({
         type: String,
         required: true
     },
-    amount: {
-        type: Number,
+    orderId: {
+        type: String,
         required: true
     },
-    note: {
-        type: String
+    paymentId: {
+        type: String,
+        required: true
+    },
+    signature: {
+        type: String,
+        required: true
     }
 });
 

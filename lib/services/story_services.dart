@@ -133,8 +133,8 @@ class StoryService {
     };
 
     var request = http.Request(
-        'PUT',
-        Uri.parse('${Constants.uri}/api/story/like')
+      'PUT',
+      Uri.parse('${Constants.uri}/api/story/like')
     );
 
     request.body = json.encode({
@@ -158,8 +158,8 @@ class StoryService {
     };
 
     var request = http.Request(
-        'PUT',
-        Uri.parse('${Constants.uri}/api/story/unlike')
+      'PUT',
+      Uri.parse('${Constants.uri}/api/story/unlike')
     );
 
     request.body = json.encode({

@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:greenbook/models/gardener_profile.dart';
 import 'package:greenbook/providers/story_provider.dart';
+import 'package:greenbook/providers/user_provider.dart';
+import 'package:greenbook/screens/donate_page.dart';
 import 'package:greenbook/services/story_services.dart';
 import 'package:greenbook/services/user_services.dart';
 import 'package:greenbook/widgets/custom_floating_action_button.dart';
@@ -82,6 +84,7 @@ class _GardenersProfilePageState extends State<GardenersProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserProvider>(context).user;
     final story = Provider.of<StoryProvider>(context).story;
 
     // fetchStory();
@@ -154,15 +157,21 @@ class _GardenersProfilePageState extends State<GardenersProfilePage> {
                     child: isFollowingGardener ? Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        CustomPrimaryFilledButton(text: "Unfollow", width: 150, height: 40, textSize: 20, onPressed: () {unfollowUser();}),
-                        CustomPrimaryOutlinedButton(text: "Donate", width: 150, height: 40, textSize: 20, onPressed: () {})
+                        CustomPrimaryFilledButton(text: "Unfollow", width: 150, height: 40, textSize: 14, onPressed: () {unfollowUser();}),
+                        CustomPrimaryOutlinedButton(text: "Donate", width: 150, height: 40, textSize: 14, onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(builder: (ctx) => DonatePage(fromUser: user.id, toUser: gardenerDetails.id,)));
+                        })
                       ],
                     ) :
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        CustomPrimaryFilledButton(text: "Follow", width: 150, height: 40, textSize: 20, onPressed: () {followUser();}),
-                        CustomPrimaryOutlinedButton(text: "Donate", width: 150, height: 40, textSize: 20, onPressed: () {})
+                        CustomPrimaryFilledButton(text: "Follow", width: 150, height: 40, textSize: 14, onPressed: () {followUser();}),
+                        CustomPrimaryOutlinedButton(text: "Donate", width: 150, height: 40, textSize: 14, onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(builder: (ctx) => DonatePage(fromUser: user.id, toUser: gardenerDetails.id,)));
+                        })
                       ],
                     ),
                   ),
